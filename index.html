@@ -552,6 +552,20 @@
       min-height: 320px;
     }
 
+    .cv-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .cv-preview-frame {
+      width: 100%;
+      height: min(76vh, 760px);
+      border: 0;
+      display: block;
+      border-radius: 0 0 12px 12px;
+    }
+
     .project-modal-info p {
       color: var(--muted);
       margin: 0 0 22px;
@@ -807,9 +821,9 @@
     <section class="hero" id="inicio">
       <div class="container hero-content">
         <p class="eyebrow">Desarrollador de videojuegos</p>
-        <h1>Desarrollador de herramientas y videojuegos.</h1>
+        <h1>Creador de herramientas y simulaciones.</h1>
         <p>
-          Desarrollador software y videojuegos centrado en simulaciones,
+          Desarrollador software y de videojuegos centrado en simulaciones,
            herramientas, motores gráficos y programación en C++ y C#.
         </p>
         <div class="button-row">
@@ -824,30 +838,33 @@
         <div class="section-title">
           <h2>Sobre mi</h2>
           <p>
-            Un espacio para resumir quien soy, que estoy estudiando o haciendo
-            actualmente, y que tipo de proyectos me interesa desarrollar.
+            Desarrollador software y de videojuegos en formación, con interés en motores, simulación, IA aplicada y optimización.
           </p>
         </div>
         <div class="about-grid">
           <article class="panel">
             <h3>Perfil</h3>
             <p>
-              Soy David Rubio Moreno. Aqui ira una descripcion mas personal:
-              formacion, intereses, tecnologias favoritas y forma de trabajar.
+              Soy David Rubio Moreno, estudiante de Desarrollo de Videojuegos en la Universidad Complutense de Madrid. Busco comenzar mi carrera profesional ampliando conocimientos en frameworks, desarrollo software y automatización.
             </p>
             <p>
-              Esta version deja preparada la estructura para cambiar textos,
-              colores, imagenes y proyectos sin rehacer la pagina desde cero.
+              Me interesa especialmente la programación en C++, el desarrollo de motores y herramientas, la eficiencia de aplicaciones, la simulación y la investigación de nuevas ideas. También trabajo con Unity y Unreal Engine, desarrollo multiplataforma y modelos de inteligencia artificial aplicados al gameplay y al análisis de datos.
+            </p>
+            <p>
+              He participado en entornos colaborativos creando motores para PC, Android y consolas, y he publicado un plugin propio de Unreal Engine en Fab. Además, participo en game jams para poner a prueba agilidad, creatividad y resolución de problemas bajo presión.
             </p>
           </article>
           <aside class="panel">
             <h3>CV</h3>
             <ul class="cv-list">
-              <li>Formacion: pendiente de completar</li>
-              <li>Experiencia: pendiente de completar</li>
-              <li>Disponibilidad: pendiente de completar</li>
+              <li>Formación: Grado en Desarrollo de Videojuegos, UCM (2022 - 2027)</li>
+              <li>Lenguajes: C++, C#, Java, C, JavaScript y Python</li>
+              <li>Inglés: B2</li>
             </ul>
-            <a class="button" href="assets/information/cv/David_Rubio_cv.pdf" target="_blank" rel="noopener noreferrer" aria-label="Descargar CV en PDF">Descargar CV</a>
+            <div class="cv-actions">
+              <button class="button" type="button" id="open-cv-preview">Ver CV</button>
+              <a class="button secondary" href="assets/information/cv/David_Rubio_cv.pdf" target="_blank" rel="noopener noreferrer" aria-label="Descargar CV en PDF">Descargar CV</a>
+            </div>
           </aside>
         </div>
       </div>
@@ -885,7 +902,7 @@
         <div class="section-title">
           <h2>Skills</h2>
           <p>
-            Tecnologias y capacidades que podras ajustar despues segun tu perfil real.
+            Algunas de las tecnologias y herramientas que usado durante mi trayectoria.
           </p>
         </div>
         <div class="skills-carousel" aria-label="Carrusel de tecnologias">
@@ -960,7 +977,7 @@
         <div class="section-title">
           <h2>Portfolio</h2>
           <p>
-            Proyectos de desarrollo de software, simulación física, motores gráficos y videojuegos en los que he trabajado.
+            Aquí se encuentran algunos de los proyectos de desarrollo de software, simulación física, motores gráficos y videojuegos en los que he trabajado.
           </p>
         </div>
         <div class="portfolio-grid">
@@ -1109,12 +1126,11 @@
         <div class="section-title">
           <h2>Contacto</h2>
           <p>
-            Seccion preparada para incluir correo, LinkedIn, GitHub o cualquier
-            otra forma de contacto profesional.
+            ¿Te gustaría que unamos fuerzas en tu próximo proyecto?
           </p>
         </div>
         <div class="contact-actions">
-          <a class="contact-link" href="mailto:tuemail@example.com">tuemail@example.com</a>
+          <a class="contact-link" href="mailto:darumo04@gmail.com">darumo04@gmail.com</a>
           <a class="contact-link" href="https://www.linkedin.com/in/david-rubio-moreno-a94681409/?trk=public-profile-join-page" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           <a class="contact-link" href="https://github.com/DavidRubioMoreno" target="_blank" rel="noopener noreferrer">GitHub</a>
         </div>
@@ -1130,6 +1146,7 @@
   <script src="scripts/carousel.js"></script>
   <script src="scripts/project-videos.js"></script>
   <script src="scripts/project-modal.js"></script>
+  <script src="scripts/cv-preview.js"></script>
   <script>
     const contributionCalendar = document.querySelector(".calendar");
     const contributionSummary = document.querySelector(".contribution-summary");
