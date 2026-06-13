@@ -532,7 +532,7 @@
     }
 
     .project-modal-media {
-      min-height: 380px;
+      aspect-ratio: 16 / 9;
       max-height: 70vh;
       border: 1px solid var(--line);
       border-radius: 10px;
@@ -540,14 +540,22 @@
       background: #05070c;
     }
 
-    .project-modal-media iframe,
+    .project-modal-media iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 380px;
+      display: block;
+      border: 0;
+      background: #000;
+    }
+
     .project-modal-media video {
       width: 100%;
       height: 100%;
       min-height: 380px;
       display: block;
       border: 0;
-      object-fit: contain;
+      object-fit: cover;
       background: #000;
     }
 
@@ -992,7 +1000,7 @@
             </div>
             <div class="project-body">
               <h3>H-Engine</h3>
-              <p>Motor gráfico 3D de alto rendimiento desarrollado en C++ utilizando APIs gráficas modernas. Diseñado para profundizar en sistemas de renderizado, shaders, gestión avanzada de memoria y físicas.</p>
+              <p>Motor 3D de alto rendimiento desarrollado en C++ utilizando librerías actuales. El motor implementa renderizado, sonido, físicas y soporte para juegos propios.</p>
               <div class="project-links-row">
                 <a class="project-link" href="https://github.com/DavidRubioMoreno" target="_blank" rel="noopener noreferrer">GitHub</a>
               </div>
@@ -1007,7 +1015,7 @@
             </div>
             <div class="project-body">
               <h3>H-Engine Ray Tracing</h3>
-              <p>Expansión del motor de H-Engine con RayTracing puro implementado completamente de 0.</p>
+              <p>Expansión del motor H-Engine implementando ray tracing completamente desde 0, permitiendo al motor renderizar con este modo.</p>
               <div class="project-links-row">
                 <a class="project-link" href="https://github.com/DavidRubioMoreno/HEngine-Raytracing" target="_blank" rel="noopener noreferrer">Ver en GitHub</a>
               </div>
@@ -1022,7 +1030,7 @@
             </div>
             <div class="project-body">
               <h3>H-TowerDefense</h3>
-              <p>Juego estilo Tower Defense en 3D con oleadas dinámicas de enemigos. Implementa inteligencia artificial para búsqueda de caminos (pathfinding), un sistema estratégico de construcción y físicas avanzadas.</p>
+              <p>Juego estilo Tower Defense en 3D con oleadas dinámicas de enemigos. Este ofrece un sistema de progresión con compra, distintos niveles con decenas de oleadas y enemigos variados.</p>
               <div class="project-links-row">
                 <a class="project-link" href="https://github.com/DavidRubioMoreno/HTowerDefense" target="_blank" rel="noopener noreferrer">Ver en GitHub</a>
               </div>
@@ -1079,13 +1087,15 @@
 
           <article class="project-card">
             <div class="project-media">
-              <div class="project-media-placeholder" data-initials="AA"></div>
+              <video class="project-video" muted loop playsinline preload="metadata">
+                <source src="assets/videos/EntrenamientoMilitar.mp4" type="video/x-matroska">
+              </video>
             </div>
             <div class="project-body">
-              <h3>Aprendizaje Automático Shooter</h3>
-              <p>Simulador de entrenamiento en entorno shooter utilizando aprendizaje por refuerzo. Agentes controlados por IA autónoma (ML-Agents) aprenden tácticas de combate y toma de decisiones tácticas.</p>
+              <h3>Entrenamiento militar</h3>
+              <p>Simulador VR, en el cúal experimentas un entrenamiento en una base militar. Deberás disparar y recargar maunualmente para cumplir con el programa militar.</p>
               <div class="project-links-row">
-                <a class="project-link" href="https://github.com/DavidRubioMoreno/IAV25-RubioMoreno" target="_blank" rel="noopener noreferrer">Ver en GitHub</a>
+                <a class="project-link" href="https://github.com/DavidRubioMoreno/EIRV_VR" target="_blank" rel="noopener noreferrer">Ver en GitHub</a>
               </div>
             </div>
           </article>
@@ -1098,7 +1108,7 @@
             </div>
             <div class="project-body">
               <h3>Bridge It</h3>
-              <p>Simulador estructural interactivo centrado en la ingeniería física de puentes. Calcula fuerzas, tensiones máximas y fatiga de materiales en tiempo real bajo cargas pesadas.</p>
+              <p>Simulador estructural interactivo centrado en la ingeniería física de puentes. Crea una estructura que permita cruzarse de forma continua y sin derrumbes.</p>
               <div class="project-links-row">
                 <a class="project-link" href="https://github.com/DavidRubioMoreno/SimulacionFisicaVideojuegos" target="_blank" rel="noopener noreferrer">Ver en GitHub</a>
               </div>
@@ -1113,7 +1123,7 @@
             </div>
             <div class="project-body">
               <h3>Manín: El Líder de la Banda</h3>
-              <p>Juego de ritmo y humor publicado en Itch.io. Ayuda al carismático Manín a dirigir a su peculiar grupo de músicos coordinando movimientos rápidos con sincronización perfecta.</p>
+              <p>Juego RPG en tercera persona publicado en Itch.io (GlobalGameJam_2025). Controla a Manín durante su aventura para recoger las ramas sagradas y derrotar a sus enemigos.</p>
               <div class="project-links-row">
                 <a class="project-link" href="https://crest646.itch.io/manin-el-lider-de-la-banda" target="_blank" rel="noopener noreferrer">Jugar en Itch.io</a>
               </div>
@@ -1128,7 +1138,7 @@
             </div>
             <div class="project-body">
               <h3>String Typing</h3>
-              <p>Juego arcade de velocidad de escritura y reflejos. Desafía tu destreza tecleando con fluidez hilos dinámicos para avanzar y desbloquear niveles con ritmos rápidos.</p>
+              <p>Juego arcade de velocidad de escritura y reflejos creado para la ComJamOn2026. Desafía tu destreza tecleando con fluidez programas dinámicos para avanzar y aprobar las asignaturas de la carrera.</p>
               <div class="project-links-row">
                 <a class="project-link" href="https://github.com/DavidRubioMoreno/ComJamOn2026" target="_blank" rel="noopener noreferrer">GitHub</a>
                 <a class="project-link" href="https://javi16333.itch.io/string-typing" target="_blank" rel="noopener noreferrer">Jugar en Itch.io</a>
@@ -1144,7 +1154,7 @@
             </div>
             <div class="project-body">
               <h3>The Simulation</h3>
-              <p>Simulador sandbox físico completo en Itch.io. Experimenta con la interacción gravitatoria de cuerpos celestes, órbitas, colisiones masivas y dinámicas de fluidos a nivel macrocósmico.</p>
+              <p>Juego y entorno interactivo en Itch.io. Experimenta con las distintas armas que ofrece la simulación e interactua espacialmente con el entorno para completar los puzzles.</p>
               <div class="project-links-row">
                 <a class="project-link" href="https://davidrubiomoreno.itch.io/thesimulation" target="_blank" rel="noopener noreferrer">Jugar en Itch.io</a>
               </div>
