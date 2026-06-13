@@ -7,6 +7,10 @@ const projectDetails = {
     youtube: "https://www.youtube.com/embed/V4cdZshBp44",
     links: [{ label: "Ver Trailer", href: "https://www.youtube.com/watch?v=V4cdZshBp44" }],
   },
+  "String Typing": {
+    youtube: "https://www.youtube.com/embed/ZQGxKZZEphE",
+    links: [{ label: "Ver Trailer", href: "https://www.youtube.com/watch?v=ZQGxKZZEphE" }],
+  },
 };
 
 const modal = document.createElement("div");
