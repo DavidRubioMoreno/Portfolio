@@ -141,6 +141,33 @@
       width: 100%;
     }
 
+    .lang-toggle {
+      background: none;
+      border: 1px solid var(--panel-border);
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--muted);
+      transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+      line-height: 1.6;
+    }
+
+    .lang-toggle:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .lang-toggle span {
+      transition: color 0.25s ease;
+    }
+
+    .lang-toggle span.active {
+      color: var(--accent);
+    }
+
     .nav-links a,
     .brand,
     .button,
@@ -1221,14 +1248,19 @@
 </head>
 <body>
   <header class="site-header">
-    <nav class="nav" aria-label="Navegacion principal">
+    <nav class="nav" data-i18n-aria-label="nav.aria" aria-label="Navegacion principal">
       <a class="brand" href="#inicio">David Rubio Moreno</a>
       <div class="nav-links">
-        <a href="#sobre-mi">Sobre mi</a>
+        <a href="#sobre-mi" data-i18n="nav.about">Sobre mí</a>
         <a href="#contribuciones">GitHub</a>
-        <a href="#skills">Skills</a>
+        <a href="#skills" data-i18n="nav.skills">Skills</a>
         <a href="#portfolio">Portfolio</a>
-        <a href="#contacto">Contacto</a>
+        <a href="#contacto" data-i18n="nav.contact">Contacto</a>
+        <button class="lang-toggle" type="button" aria-label="Cambiar idioma">
+          <span data-lang="es" class="active">ES</span>
+          <span style="opacity:0.3;margin:0 2px;">|</span>
+          <span data-lang="en">EN</span>
+        </button>
       </div>
     </nav>
   </header>
@@ -1236,15 +1268,15 @@
   <main>
     <section class="hero" id="inicio">
       <div class="container hero-content">
-        <p class="eyebrow">Portfolio</p>
-        <h1>Creando herramientas, simulaciones y videojuegos que traspasan fronteras.</h1>
-        <p>
+        <p class="eyebrow" data-i18n="hero.eyebrow">Portfolio</p>
+        <h1 data-i18n="hero.title">Creando herramientas, simulaciones y videojuegos que traspasan fronteras.</h1>
+        <p data-i18n="hero.desc">
           Desarrollador software y de videojuegos centrado en simulaciones,
            herramientas, motores gráficos y programación en C++ y C#
         </p>
         <div class="button-row">
-          <a class="button" href="#portfolio">Ver portfolio</a>
-          <a class="button secondary" href="#contacto">Contactar</a>
+          <a class="button" href="#portfolio" data-i18n="hero.portfolioBtn">Ver portfolio</a>
+          <a class="button secondary" href="#contacto" data-i18n="hero.contactBtn">Contactar</a>
         </div>
       </div>
     </section>
@@ -1252,29 +1284,25 @@
     <section id="sobre-mi">
       <div class="container">
         <div class="section-title">
-          <h2>Sobre mi</h2>
+          <h2 data-i18n="about.title">Sobre mí</h2>
         </div>
         <div class="about-grid">
           <article class="panel">
-            <h3>Perfil</h3>
-            <p>
+            <h3 data-i18n="about.profileTitle">Perfil</h3>
+            <p data-i18n="about.p1">
               Soy David Rubio Moreno, estudiante de Desarrollo de Videojuegos en la Universidad Complutense de Madrid. Busco comenzar mi carrera profesional ampliando conocimientos en frameworks, desarrollo software y automatización.
             </p>
-            <p>
-              Me interesa especialmente la programación en C++, el desarrollo de motores y herramientas, la eficiencia de aplicaciones, la simulación y la investigación de nuevas ideas. También trabajo con Unity y Unreal Engine, desarrollo multiplataforma y modelos de inteligencia artificial aplicados al gameplay y al análisis de datos.
-            </p>
-            <p>
-              He participado en entornos colaborativos creando motores para PC, Android y consolas, y he publicado un plugin propio de Unreal Engine en Fab. Además, participo en game jams para poner a prueba mi agilidad, creatividad y resolución de problemas bajo presión.
-            </p>
+            <p data-i18n="about.p2">
+            <p data-i18n="about.p3">
           </article>
           <aside class="panel">
-            <h3>CV</h3>
+            <h3 data-i18n="about.cvTitle">CV</h3>
             <ul class="cv-list">
-              <li>Aquí se encuentra mi Currículum Vitae.</li>
+              <li data-i18n="about.cvText">Aquí se encuentra mi Currículum Vitae.</li>
             </ul>
             <div class="cv-actions">
-              <button class="button" type="button" id="open-cv-preview">Ver CV</button>
-              <a class="button secondary" href="assets/information/cv/David_Rubio_cv.pdf" target="_blank" rel="noopener noreferrer" aria-label="Descargar CV en PDF">Descargar CV</a>
+              <button class="button" type="button" id="open-cv-preview" data-i18n="about.cvView">Ver CV</button>
+              <a class="button secondary" href="assets/information/cv/David_Rubio_cv.pdf" target="_blank" rel="noopener noreferrer" aria-label="Descargar CV en PDF" data-i18n="about.cvDownload">Descargar CV</a>
             </div>
           </aside>
         </div>
@@ -1284,25 +1312,25 @@
     <section id="contribuciones">
       <div class="container">
         <div class="section-title">
-          <h2>Contribuciones en GitHub</h2>
-          <p>
+          <h2 data-i18n="contributions.title">Contribuciones en GitHub</h2>
+          <p data-i18n="contributions.desc">
             Mapa anual de actividad en mis repositorios publicos de GitHub.
           </p>
         </div>
         <div class="panel contributions-panel">
-          <div class="contribution-years" aria-label="Seleccionar ano de contribuciones"></div>
+          <div class="contribution-years" data-i18n-aria-label="contributions.yearSelect" aria-label="Seleccionar ano de contribuciones"></div>
           <div class="contribution-summary" aria-live="polite">Cargando contribuciones...</div>
           <div class="calendar-wrapper">
-            <div class="calendar" aria-label="Mapa de contribuciones por dia"></div>
+            <div class="calendar" data-i18n-aria-label="contributions.calendar" aria-label="Mapa de contribuciones por dia"></div>
           </div>
           <div class="contribution-legend" aria-hidden="true">
-            <span>Menos</span>
+            <span data-i18n="contributions.less">Menos</span>
             <span class="contribution-day" data-level="0"></span>
             <span class="contribution-day" data-level="1"></span>
             <span class="contribution-day" data-level="2"></span>
             <span class="contribution-day" data-level="3"></span>
             <span class="contribution-day" data-level="4"></span>
-            <span>Mas</span>
+            <span data-i18n="contributions.more">M&aacute;s</span>
           </div>
         </div>
       </div>
@@ -1311,8 +1339,8 @@
     <section id="skills">
       <div class="container">
         <div class="section-title">
-          <h2>Skills</h2>
-          <p>
+          <h2 data-i18n="skills.title">Skills</h2>
+          <p data-i18n="skills.desc">
             Algunas de las tecnologias y herramientas que usado durante mi trayectoria
           </p>
         </div>
@@ -1381,28 +1409,28 @@
           </div>
         </div>
         <div class="soft-skills-grid">
-          <div class="soft-skill-card">Trabajo en equipo</div>
-          <div class="soft-skill-card">Control de versiones</div>
-          <div class="soft-skill-card">Resolución de problemas</div>
-          <div class="soft-skill-card">Comunicación técnica</div>
-          <div class="soft-skill-card">Gestión de proyectos</div>
-          <div class="soft-skill-card">Estructuras de datos</div>
-          <div class="soft-skill-card">Algoritmos avanzados</div>
-          <div class="soft-skill-card">Pensamiento crítico</div>
-          <div class="soft-skill-card">Adaptabilidad</div>
-          <div class="soft-skill-card">Documentación</div>
-          <div class="soft-skill-card">Investigación</div>
-          <div class="soft-skill-card">Programación de GPUs</div>
-          <div class="soft-skill-card">Simulación física</div>
-          <div class="soft-skill-card">Shaders e iluminación</div>
-          <div class="soft-skill-card">Aprendizaje automático</div>
-          <div class="soft-skill-card">Optimización de código</div>
-          <div class="soft-skill-card">Programación asíncrona</div>
-          <div class="soft-skill-card">Desarrollo en Unity</div>
-          <div class="soft-skill-card">Desarrollo en Unreal</div>
-          <div class="soft-skill-card">Desarrollo multiplataforma</div>
-          <div class="soft-skill-card">Programación agéntica</div>
-          <div class="soft-skill-card">IA aplicada</div>
+          <div class="soft-skill-card" data-i18n="skills.teamwork">Trabajo en equipo</div>
+          <div class="soft-skill-card" data-i18n="skills.versionControl">Control de versiones</div>
+          <div class="soft-skill-card" data-i18n="skills.problemSolving">Resolución de problemas</div>
+          <div class="soft-skill-card" data-i18n="skills.techComm">Comunicación técnica</div>
+          <div class="soft-skill-card" data-i18n="skills.projectMgmt">Gestión de proyectos</div>
+          <div class="soft-skill-card" data-i18n="skills.dataStructures">Estructuras de datos</div>
+          <div class="soft-skill-card" data-i18n="skills.advancedAlgos">Algoritmos avanzados</div>
+          <div class="soft-skill-card" data-i18n="skills.criticalThinking">Pensamiento crítico</div>
+          <div class="soft-skill-card" data-i18n="skills.adaptability">Adaptabilidad</div>
+          <div class="soft-skill-card" data-i18n="skills.documentation">Documentación</div>
+          <div class="soft-skill-card" data-i18n="skills.research">Investigación</div>
+          <div class="soft-skill-card" data-i18n="skills.gpuProg">Programación de GPUs</div>
+          <div class="soft-skill-card" data-i18n="skills.physicsSim">Simulación física</div>
+          <div class="soft-skill-card" data-i18n="skills.shaders">Shaders e iluminación</div>
+          <div class="soft-skill-card" data-i18n="skills.ml">Aprendizaje automático</div>
+          <div class="soft-skill-card" data-i18n="skills.codeOpt">Optimización de código</div>
+          <div class="soft-skill-card" data-i18n="skills.asyncProg">Programación asíncrona</div>
+          <div class="soft-skill-card" data-i18n="skills.unityDev">Desarrollo en Unity</div>
+          <div class="soft-skill-card" data-i18n="skills.unrealDev">Desarrollo en Unreal</div>
+          <div class="soft-skill-card" data-i18n="skills.crossplat">Desarrollo multiplataforma</div>
+          <div class="soft-skill-card" data-i18n="skills.agenticProg">Programación agéntica</div>
+          <div class="soft-skill-card" data-i18n="skills.aiApplied">IA aplicada</div>
           
         </div>
       </div>
@@ -1411,14 +1439,14 @@
     <section id="portfolio">
       <div class="container">
         <div class="section-title">
-          <h2>Portfolio</h2>
-          <p>
+          <h2 data-i18n="portfolio.title">Portfolio</h2>
+          <p data-i18n="portfolio.desc">
             Aquí se encuentran algunos de los proyectos de desarrollo de software, simulación física, motores gráficos y videojuegos en los que he trabajado.
           </p>
         </div>
         <div class="portfolio-grid">
 
-          <article class="project-card" data-description="Plugin de C++/Blueprints para Unreal Engine 5 (publicado en Fab), creado como trabajo de fin de grado en grupo de 3. Este permite generar sistemas planetarios proceduralmente, además implementa sistemas de LOD, colisiones, distribución automática de vegetación y un sistema que combina órbitas elípticas con simulación N-cuerpos." 
+          <article class="project-card" data-i18n-description="project.cosmicArchitect.desc" data-i18n-contributions="project.cosmicArchitect.contrib" data-description="Plugin de C++/Blueprints para Unreal Engine 5 (publicado en Fab), creado como trabajo de fin de grado en grupo de 3. Este permite generar sistemas planetarios proceduralmente, además implementa sistemas de LOD, colisiones, distribución automática de vegetación y un sistema que combina órbitas elípticas con simulación N-cuerpos." 
           data-contributions="Investigación, creación de requisitos funcionales, implementación de: estructura de módulos, sistema de LOD, actualización por fases, sistema de generación de ruido con patrón Strategy, materiales, oceano, simulación N-cuerpos, generador de texturas 3D, pruebas de rendimiento, página web. Cumplimiento de requisitos técnicos para publicar en Fab. ">
             <div class="project-media">
               <video class="project-video" muted loop playsinline preload="metadata">
@@ -1426,16 +1454,16 @@
               </video>
             </div>
             <div class="project-body">
-              <h3>Cosmic Architect</h3>
-              <p>Herramienta procedural interactiva desarrollada para Unreal Engine 5. Permite diseñar, generar y orbitar sistemas estelares enteros, planetas y cinturones de asteroides con alta fidelidad visual.</p>
+              <h3 data-i18n="project.cosmicArchitect.title">Cosmic Architect</h3>
+              <p data-i18n="project.cosmicArchitect.short">Herramienta procedural interactiva desarrollada para Unreal Engine 5. Permite diseñar, generar y orbitar sistemas estelares enteros, planetas y cinturones de asteroides con alta fidelidad visual.</p>
               <div class="project-links-row">
-                <a class="project-link" href="https://github.com/narratech/TFG-Bravo-Perez-Rubio" target="_blank" rel="noopener noreferrer">Ver en GitHub</a>
-                <a class="project-link" href="https://www.fab.com/listings/4e181e3f-0077-4ed6-8079-39e679ddfe24?tab=reviews" target="_blank" rel="noopener noreferrer">Ver en Fab</a>
+                <a class="project-link" href="https://github.com/narratech/TFG-Bravo-Perez-Rubio" target="_blank" rel="noopener noreferrer" data-i18n="project.cosmicArchitect.link1">Ver en GitHub</a>
+                <a class="project-link" href="https://www.fab.com/listings/4e181e3f-0077-4ed6-8079-39e679ddfe24?tab=reviews" target="_blank" rel="noopener noreferrer" data-i18n="project.cosmicArchitect.link2">Ver en Fab</a>
               </div>
             </div>
           </article>
 
-          <article class="project-card" data-description="Juego arcade de velocidad de escritura y reflejos creado para la ComJamOn2026. Desafía tu destreza tecleando con fluidez programas dinámicos para avanzar y aprobar las asignaturas de la carrera." 
+          <article class="project-card" data-i18n-description="project.stringTyping.desc" data-i18n-contributions="project.stringTyping.contrib" data-description="Juego arcade de velocidad de escritura y reflejos creado para la ComJamOn2026. Desafía tu destreza tecleando con fluidez programas dinámicos para avanzar y aprobar las asignaturas de la carrera." 
           data-contributions="Diseño del juego e implementación de las distintas escenas y su comportamiento.">
             <div class="project-media">
               <video class="project-video" muted loop playsinline preload="metadata">
@@ -1443,16 +1471,16 @@
               </video>
             </div>
             <div class="project-body">
-              <h3>String Typing</h3>
-              <p>Juego arcade de velocidad de escritura y reflejos creado para la ComJamOn2026. Desafía tu destreza tecleando con fluidez programas dinámicos para avanzar y aprobar las asignaturas de la carrera.</p>
+              <h3 data-i18n="project.stringTyping.title">String Typing</h3>
+              <p data-i18n="project.stringTyping.short">Juego arcade de velocidad de escritura y reflejos creado para la ComJamOn2026. Desafía tu destreza tecleando con fluidez programas dinámicos para avanzar y aprobar las asignaturas de la carrera.</p>
               <div class="project-links-row">
-                <a class="project-link" href="https://github.com/DavidRubioMoreno/ComJamOn2026" target="_blank" rel="noopener noreferrer">Ver en GitHub</a>
-                <a class="project-link" href="https://javi16333.itch.io/string-typing" target="_blank" rel="noopener noreferrer">Visitar Itch.io</a>
+                <a class="project-link" href="https://github.com/DavidRubioMoreno/ComJamOn2026" target="_blank" rel="noopener noreferrer" data-i18n="project.stringTyping.link1">Ver en GitHub</a>
+                <a class="project-link" href="https://javi16333.itch.io/string-typing" target="_blank" rel="noopener noreferrer" data-i18n="project.stringTyping.link2">Visitar Itch.io</a>
               </div>
             </div>
           </article>
 
-          <article class="project-card" data-description="Motor 3D creado en C++ y Lua usando Fmod, Ogre3D, SDL, PhysX e ImGUI, con arquitectura ECS. Proyecto en grupo de 10 personas. Se crearon además 2 juegos compatibles con el motor. Independientemente amplié el motor integrando ray tracing usando compute shaders(OpenGL), se gestionó tanto la subida a GPU de datos como buffers, texturas, mapas UV, materiales y entidades." 
+          <article class="project-card" data-i18n-description="project.hEngine.desc" data-i18n-contributions="project.hEngine.contrib" data-description="Motor 3D creado en C++ y Lua usando Fmod, Ogre3D, SDL, PhysX e ImGUI, con arquitectura ECS. Proyecto en grupo de 10 personas. Se crearon además 2 juegos compatibles con el motor. Independientemente amplié el motor integrando ray tracing usando compute shaders(OpenGL), se gestionó tanto la subida a GPU de datos como buffers, texturas, mapas UV, materiales y entidades." 
           data-contributions="Selección de librerías, implementación del módulo de renderizado e input, implementación de la lógica del juego Nini-Strikers, implementación del renderizado por RayTracing.">
             <div class="project-media">
               <video class="project-video" muted loop playsinline preload="metadata">
@@ -1460,15 +1488,15 @@
               </video>
             </div>
             <div class="project-body">
-              <h3>H-Engine</h3>
-              <p>Motor 3D de alto rendimiento desarrollado en C++ utilizando librerías actuales. El motor implementa renderizado, sonido, físicas y soporte para juegos propios.</p>
+              <h3 data-i18n="project.hEngine.title">H-Engine</h3>
+              <p data-i18n="project.hEngine.short">Motor 3D de alto rendimiento desarrollado en C++ utilizando librerías actuales. El motor implementa renderizado, sonido, físicas y soporte para juegos propios.</p>
               <div class="project-links-row">
-                <a class="project-link" href="https://github.com/DavidRubioMoreno" target="_blank" rel="noopener noreferrer">Ver en GitHub</a>
+                <a class="project-link" href="https://github.com/DavidRubioMoreno" target="_blank" rel="noopener noreferrer" data-i18n="project.hEngine.link1">Ver en GitHub</a>
               </div>
             </div>
           </article>
 
-          <article class="project-card" data-description="Proyecto en Unity desarrollado con las Meta Quest 2. Grupo de 3 integrantes." 
+          <article class="project-card" data-i18n-description="project.military.desc" data-i18n-contributions="project.military.contrib" data-description="Proyecto en Unity desarrollado con las Meta Quest 2. Grupo de 3 integrantes." 
           data-contributions="Configuración del proyecto para compatibilidad con las gafas, creación de la escena, sistema de puntuación.">
             <div class="project-media">
               <video class="project-video" muted loop playsinline preload="metadata">
@@ -1476,15 +1504,15 @@
               </video>
             </div>
             <div class="project-body">
-              <h3>Entrenamiento militar</h3>
-              <p>Simulador VR, en el cúal experimentas un entrenamiento en una base militar. Deberás disparar y recargar manualmente para cumplir con el programa militar.</p>
+              <h3 data-i18n="project.military.title">Entrenamiento militar</h3>
+              <p data-i18n="project.military.short">Simulador VR, en el cúal experimentas un entrenamiento en una base militar. Deberás disparar y recargar manualmente para cumplir con el programa militar.</p>
               <div class="project-links-row">
-                <a class="project-link" href="https://github.com/DavidRubioMoreno/EIRV_VR" target="_blank" rel="noopener noreferrer">Ver en GitHub</a>
+                <a class="project-link" href="https://github.com/DavidRubioMoreno/EIRV_VR" target="_blank" rel="noopener noreferrer" data-i18n="project.military.link1">Ver en GitHub</a>
               </div>
             </div>
           </article>
 
-          <article class="project-card" data-description="Videojuego de acción y rol en tercera persona desarrollado en Unity. Presenta mecánicas de combate pulidas, animaciones fluidas, un sistema dinámico de combos y progresión del personaje." 
+          <article class="project-card" data-i18n-description="project.endlessRedemption.desc" data-i18n-contributions="project.endlessRedemption.contrib" data-description="Videojuego de acción y rol en tercera persona desarrollado en Unity. Presenta mecánicas de combate pulidas, animaciones fluidas, un sistema dinámico de combos y progresión del personaje." 
           data-contributions="Creación de mapas, implementación del comportamiento de enemigos, jugador y power-ups.">
             <div class="project-media">
               <video class="project-video" muted loop playsinline preload="metadata">
@@ -1492,15 +1520,15 @@
               </video>
             </div>
             <div class="project-body">
-              <h3>Endless Redemption</h3>
-              <p>Videojuego de acción y rol en tercera persona desarrollado en Unity. Presenta mecánicas de combate pulidas, animaciones fluidas, un sistema dinámico de combos y progresión del personaje.</p>
+              <h3 data-i18n="project.endlessRedemption.title">Endless Redemption</h3>
+              <p data-i18n="project.endlessRedemption.short">Videojuego de acción y rol en tercera persona desarrollado en Unity. Presenta mecánicas de combate pulidas, animaciones fluidas, un sistema dinámico de combos y progresión del personaje.</p>
               <div class="project-links-row">
-                <a class="project-link" href="https://github.com/DavidRubioMoreno/EndlessRedemption" target="_blank" rel="noopener noreferrer">Ver en GitHub</a>
+                <a class="project-link" href="https://github.com/DavidRubioMoreno/EndlessRedemption" target="_blank" rel="noopener noreferrer" data-i18n="project.endlessRedemption.link1">Ver en GitHub</a>
               </div>
             </div>
           </article>
 
-          <article class="project-card" data-description="Aventura inmersiva de misterio y puzles en primera persona creada para la Global Game Jam 2026, creada en Unity con un equipo de 4 personas." 
+          <article class="project-card" data-i18n-description="project.nightmareTales.desc" data-i18n-contributions="project.nightmareTales.contrib" data-description="Aventura inmersiva de misterio y puzles en primera persona creada para la Global Game Jam 2026, creada en Unity con un equipo de 4 personas." 
           data-contributions="Generación de salas, gestión de objetos y recolectables, intregración de partículas y loop del juego.">
             <div class="project-media">
               <video class="project-video" muted loop playsinline preload="metadata">
@@ -1508,50 +1536,16 @@
               </video>
             </div>
             <div class="project-body">
-              <h3>Nightmare Tales</h3>
-              <p>Aventura inmersiva de misterio y puzles en primera persona creada para la Global Game Jam 2026. Ofrece un diseño sonoro envolvente, una atmósfera tensa y generación procedimental de salas.</p>
+              <h3 data-i18n="project.nightmareTales.title">Nightmare Tales</h3>
+              <p data-i18n="project.nightmareTales.short">Aventura inmersiva de misterio y puzles en primera persona creada para la Global Game Jam 2026. Ofrece un diseño sonoro envolvente, una atmósfera tensa y generación procedimental de salas.</p>
               <div class="project-links-row">
-                <a class="project-link" href="https://github.com/DavidRubioMoreno/GlobalGameJam_2026" target="_blank" rel="noopener noreferrer">Ver en GitHub</a>
-                <a class="project-link" href="https://globalgamejam.org/games/2026/juego-ninis-7" target="_blank" rel="noopener noreferrer">Página en GGJ</a>
+                <a class="project-link" href="https://github.com/DavidRubioMoreno/GlobalGameJam_2026" target="_blank" rel="noopener noreferrer" data-i18n="project.nightmareTales.link1">Ver en GitHub</a>
+                <a class="project-link" href="https://globalgamejam.org/games/2026/juego-ninis-7" target="_blank" rel="noopener noreferrer" data-i18n="project.nightmareTales.link2">Página en GGJ</a>
               </div>
             </div>
           </article>
 
-          
-
-          <!-- <article class="project-card" data-description="Juego creado sin motor gráfico usando la librería de C++ SDL con OpenGL, equipo de 10 personas. La implementación usa el modelo ECS." 
-          data-contributions="Integración de animaciones, partículas, sistema de meteorología y lógica de las torres.">
-            <div class="project-media">
-              <video class="project-video" muted loop playsinline preload="metadata">
-                <source src="assets/videos/Trailer%20H-Defense.mp4" type="video/mp4">
-              </video>
-            </div>
-            <div class="project-body">
-              <h3>H-TowerDefense</h3>
-              <p>Juego estilo Tower Defense en 2.5 con oleadas dinámicas de enemigos. Este ofrece un sistema de progresión con compra, distintos niveles con decenas de oleadas y enemigos variados.</p>
-              <div class="project-links-row">
-                <a class="project-link" href="https://github.com/DavidRubioMoreno/HTowerDefense" target="_blank" rel="noopener noreferrer">Ver en GitHub</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card" data-description="Proyecto en C++ usando PhysX para implementar sistemas de partículas, muelles, flotación e intregración propia, posteriormente creando una demo técnica." 
-          data-contributions="Proyecto individual.">
-            <div class="project-media">
-              <video class="project-video" muted loop playsinline preload="metadata">
-                <source src="assets/videos/BridgeIt.mkv" type="video/x-matroska">
-              </video>
-            </div>
-            <div class="project-body">
-              <h3>Bridge It</h3>
-              <p>Simulador estructural interactivo centrado en la ingeniería física de puentes. Crea una estructura que permita cruzarse de forma continua y sin derrumbes.</p>
-              <div class="project-links-row">
-                <a class="project-link" href="https://github.com/DavidRubioMoreno/SimulacionFisicaVideojuegos" target="_blank" rel="noopener noreferrer">Ver en GitHub</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card" data-description="Juego creado en grupo de 6 para la GlobalGameJam_2025. Esta desarrollado en Unity y Fmod." 
+          <article class="project-card" data-i18n-description="project.manin.desc" data-i18n-contributions="project.manin.contrib" data-description="Juego creado en grupo de 6 para la GlobalGameJam_2025. Esta desarrollado en Unity y Fmod." 
           data-contributions="Escenarios, integración de párticulas, generación de enemigos, cinemáticas, sonido.">
             <div class="project-media">
               <video class="project-video" muted loop playsinline preload="metadata">
@@ -1559,16 +1553,52 @@
               </video>
             </div>
             <div class="project-body">
-              <h3>Manín: El Líder de la Banda</h3>
-              <p>Juego RPG en tercera persona publicado en Itch.io (GlobalGameJam_2025). Controla a Manín durante su aventura para recoger las ramas sagradas y derrotar a sus enemigos.</p>
+              <h3 data-i18n="project.manin.title">Manín: El Líder de la Banda</h3>
+              <p data-i18n="project.manin.short">Juego RPG en tercera persona publicado en Itch.io (GlobalGameJam_2025). Controla a Manín durante su aventura para recoger las ramas sagradas y derrotar a sus enemigos.</p>
               <div class="project-links-row">
-                <a class="project-link" href="https://github.com/DavidRubioMoreno/ComJamon2025-Sonido" target="_blank" rel="noopener noreferrer">Ver en GitHub</a>
-                <a class="project-link" href="https://crest646.itch.io/manin-el-lider-de-la-banda" target="_blank" rel="noopener noreferrer">Visitar Itch.io</a>
+                <a class="project-link" href="https://github.com/DavidRubioMoreno/ComJamon2025-Sonido" target="_blank" rel="noopener noreferrer" data-i18n="project.manin.link1">Ver en GitHub</a>
+                <a class="project-link" href="https://crest646.itch.io/manin-el-lider-de-la-banda" target="_blank" rel="noopener noreferrer" data-i18n="project.manin.link2">Visitar Itch.io</a>
               </div>
             </div>
           </article>
 
-          <article class="project-card" data-description="Juego y entorno interactivo en Itch.io. Experimenta con las distintas armas que ofrece la simulación e interactua espacialmente con el entorno para completar los puzzles." 
+          
+
+          <!-- <article class="project-card" data-i18n-description="project.hTowerDefense.desc" data-i18n-contributions="project.hTowerDefense.contrib" data-description="Juego creado sin motor gráfico usando la librería de C++ SDL con OpenGL, equipo de 10 personas. La implementación usa el modelo ECS." 
+          data-contributions="Integración de animaciones, partículas, sistema de meteorología y lógica de las torres.">
+            <div class="project-media">
+              <video class="project-video" muted loop playsinline preload="metadata">
+                <source src="assets/videos/Trailer%20H-Defense.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="project-body">
+              <h3 data-i18n="project.hTowerDefense.title">H-TowerDefense</h3>
+              <p data-i18n="project.hTowerDefense.short">Juego estilo Tower Defense en 2.5 con oleadas dinámicas de enemigos. Este ofrece un sistema de progresión con compra, distintos niveles con decenas de oleadas y enemigos variados.</p>
+              <div class="project-links-row">
+                <a class="project-link" href="https://github.com/DavidRubioMoreno/HTowerDefense" target="_blank" rel="noopener noreferrer" data-i18n="project.hTowerDefense.link1">Ver en GitHub</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" data-i18n-description="project.bridgeIt.desc" data-i18n-contributions="project.bridgeIt.contrib" data-description="Proyecto en C++ usando PhysX para implementar sistemas de partículas, muelles, flotación e intregración propia, posteriormente creando una demo técnica." 
+          data-contributions="Proyecto individual.">
+            <div class="project-media">
+              <video class="project-video" muted loop playsinline preload="metadata">
+                <source src="assets/videos/BridgeIt.mkv" type="video/x-matroska">
+              </video>
+            </div>
+            <div class="project-body">
+              <h3 data-i18n="project.bridgeIt.title">Bridge It</h3>
+              <p data-i18n="project.bridgeIt.short">Simulador estructural interactivo centrado en la ingeniería física de puentes. Crea una estructura que permita cruzarse de forma continua y sin derrumbes.</p>
+              <div class="project-links-row">
+                <a class="project-link" href="https://github.com/DavidRubioMoreno/SimulacionFisicaVideojuegos" target="_blank" rel="noopener noreferrer" data-i18n="project.bridgeIt.link1">Ver en GitHub</a>
+              </div>
+            </div>
+          </article>
+
+          
+
+          <article class="project-card" data-i18n-description="project.theSimulation.desc" data-i18n-contributions="project.theSimulation.contrib" data-description="Juego y entorno interactivo en Itch.io. Experimenta con las distintas armas que ofrece la simulación e interactua espacialmente con el entorno para completar los puzzles." 
           data-contributions="Proyecto individual.">
             <div class="project-media">
               <video class="project-video" muted loop playsinline preload="metadata">
@@ -1576,11 +1606,11 @@
               </video>
             </div>
             <div class="project-body">
-              <h3>The Simulation</h3>
-              <p>Juego y entorno interactivo en Itch.io. Experimenta con las distintas armas que ofrece la simulación e interactua espacialmente con el entorno para completar los puzzles.</p>
+              <h3 data-i18n="project.theSimulation.title">The Simulation</h3>
+              <p data-i18n="project.theSimulation.short">Juego y entorno interactivo en Itch.io. Experimenta con las distintas armas que ofrece la simulación e interactua espacialmente con el entorno para completar los puzzles.</p>
               <div class="project-links-row">
-                <a class="project-link" href="https://github.com/DavidRubioMoreno/EIRVProyectoFinal" target="_blank" rel="noopener noreferrer">Ver en GitHub</a>                
-                <a class="project-link" href="https://davidrubiomoreno.itch.io/thesimulation" target="_blank" rel="noopener noreferrer">Visitar Itch.io</a>
+                <a class="project-link" href="https://github.com/DavidRubioMoreno/EIRVProyectoFinal" target="_blank" rel="noopener noreferrer" data-i18n="project.theSimulation.link1">Ver en GitHub</a>                
+                <a class="project-link" href="https://davidrubiomoreno.itch.io/thesimulation" target="_blank" rel="noopener noreferrer" data-i18n="project.theSimulation.link2">Visitar Itch.io</a>
               </div>
             </div>
           </article> -->
@@ -1591,8 +1621,8 @@
     <section class="contact" id="contacto">
       <div class="container">
         <div class="section-title">
-          <h2>Contacto</h2>
-          <p>
+          <h2 data-i18n="contact.title">Contacto</h2>
+          <p data-i18n="contact.desc">
             ¿Te gustaría unir fuerzas en tu próximo proyecto?
           </p>
         </div>
@@ -1608,9 +1638,10 @@
   <footer class="site-footer">
     <div class="container">
       <span>// 2026 David Rubio Moreno</span>
-      <span style="margin-left: 16px; opacity: 0.5;">build.v1.1</span>
+      <span style="margin-left: 16px; opacity: 0.5;" data-i18n="footer.tag">build.v1.1</span>
     </div>
   </footer>
+  <script src="scripts/translations.js"></script>
   <script src="scripts/hero-particles.js"></script>
   <script src="scripts/carousel.js"></script>
   <script src="scripts/project-videos.js"></script>
@@ -1709,7 +1740,7 @@
         const cell = document.createElement("span");
         cell.className = "contribution-day";
         cell.dataset.level = day.level;
-        cell.title = `${day.date}: ${day.count} contribuciones`;
+        cell.title = `${day.date}: ${day.count} ${t("contributions.word")}`;
         cell.style.gridRow = row.toString();
         cell.style.gridColumn = Math.min(col, 55).toString();
         contributionCalendar.appendChild(cell);
@@ -1719,7 +1750,7 @@
         ? data.total[year]
         : contributions.reduce((sum, day) => sum + day.count, 0);
 
-      contributionSummary.textContent = `${total} contribuciones en ${year}`;
+      contributionSummary.textContent = t("contributions.summary", { total: total, year: year });
     }
 
     function loadGithubContributions(year = activeContributionYear, forceRefresh = false) {
@@ -1733,7 +1764,7 @@
 
       activeContributionYear = year;
       renderContributionYears();
-      contributionSummary.textContent = `Cargando contribuciones de ${year}...`;
+      contributionSummary.textContent = t("contributions.loading", { year: year });
 
       fetch(`https://github-contributions-api.jogruber.de/v4/${githubUser}?y=${year}`)
         .then((response) => {
@@ -1745,7 +1776,7 @@
           renderContributionCalendar(year, data);
         })
         .catch(() => {
-          contributionSummary.textContent = "No se pudieron cargar las contribuciones de GitHub.";
+          contributionSummary.textContent = t("contributions.error");
         });
     }
 

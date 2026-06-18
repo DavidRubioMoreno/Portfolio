@@ -127,7 +127,7 @@ document.querySelectorAll(".project-card").forEach((card) => {
   const button = document.createElement("button");
   button.type = "button";
   button.className = "project-action";
-  button.textContent = "Ver detalles";
+  button.textContent = typeof t !== "undefined" ? t("project.viewDetails") : "Ver detalles";
   button.addEventListener("click", () => openProjectModal(card));
   linksRow.appendChild(button);
 });
