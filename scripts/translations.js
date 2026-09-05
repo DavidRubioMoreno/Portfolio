@@ -1,4 +1,14 @@
 const translations = {
+  "modal.localVideo": { en: "Watch demo without YouTube", es: "Ver demo sin YouTube" },
+  "skills.carousel": { en: "Technologies — scroll to explore", es: "Tecnologías — desliza para explorar" },
+  "nav.skip": { en: "Skip to content", es: "Saltar al contenido" },
+  "nav.menu": { en: "Navigation menu", es: "Menú de navegación" },
+  "nav.language": { en: "Change language", es: "Cambiar idioma" },
+  "modal.close": { en: "Close preview", es: "Cerrar vista previa" },
+  "modal.contributions": { en: "Contributions", es: "Contribuciones" },
+  "modal.trailer": { en: "Watch trailer", es: "Ver trailer" },
+  "cv.fallback": { en: "If the preview does not appear, open the PDF directly.", es: "Si la vista previa no aparece, abre el PDF directamente." },
+  "cv.open": { en: "Open PDF", es: "Abrir PDF" },
   "nav.about": { en: "About me", es: "Sobre mí" },
   "nav.github": { en: "GitHub", es: "GitHub" },
   "nav.skills": { en: "Skills", es: "Skills" },
@@ -152,7 +162,8 @@ function t(key, params) {
 function setLanguage(lang) {
   if (lang !== "en" && lang !== "es") return;
   currentLang = lang;
-  localStorage.setItem("lang", lang);
+  document.documentElement.lang = lang;
+  try { localStorage.setItem("lang", lang); } catch (_) { /* Storage may be unavailable. */ }
 
   document.querySelectorAll("[data-i18n]").forEach(function (el) {
     el.textContent = t(el.getAttribute("data-i18n"));
@@ -178,8 +189,9 @@ function setLanguage(lang) {
 }
 
 (function () {
-  var saved = localStorage.getItem("lang");
-  if (saved) {
+  var saved;
+  try { saved = localStorage.getItem("lang"); } catch (_) { /* Use browser language. */ }
+  if (saved === "es" || saved === "en") {
     currentLang = saved;
   } else {
     var navLang = (navigator.language || "es").slice(0, 2);
@@ -189,14 +201,10 @@ function setLanguage(lang) {
 })();
 
 document.addEventListener("click", function (e) {
-  var target = e.target;
-  while (target && !target.classList.contains("lang-toggle")) target = target.parentNode;
+  var target = e.target instanceof Element ? e.target.closest(".lang-toggle") : null;
   if (!target) return;
   var span = target.querySelector("span.active");
   var nextLang = span && span.dataset.lang === "en" ? "es" : "en";
   setLanguage(nextLang);
-  var detailButtons = document.querySelectorAll(".project-action");
-  for (var i = 0; i < detailButtons.length; i++) {
-    detailButtons[i].textContent = t("project.viewDetails");
-  }
+  document.dispatchEvent(new Event("languagechange"));
 });

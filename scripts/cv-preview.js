@@ -8,40 +8,27 @@ if (cvPreviewButton) {
   cvModal.innerHTML = `
     <div class="project-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="cv-modal-title">
       <div class="project-modal-header">
-        <h2 id="cv-modal-title">CV - David Rubio</h2>
-        <button class="project-modal-close" type="button" aria-label="Cerrar CV">x</button>
+        <h2 id="cv-modal-title">CV · David Rubio Moreno</h2>
+        <button class="project-modal-close" type="button" data-i18n-aria-label="modal.close" aria-label="${t('modal.close')}">×</button>
       </div>
-      <embed class="cv-preview-frame" src="${cvPath}" type="application/pdf" title="CV de David Rubio">
+      <div class="cv-preview-content"></div>
+      <div class="cv-preview-fallback">
+        <p data-i18n="cv.fallback">${t('cv.fallback')}</p>
+        <a class="button secondary" href="${cvPath}" target="_blank" rel="noopener noreferrer" data-i18n="cv.open">${t('cv.open')}</a>
+      </div>
     </div>
   `;
   document.body.appendChild(cvModal);
-
-  const cvCloseButton = cvModal.querySelector(".project-modal-close");
-  const cvFrame = cvModal.querySelector(".cv-preview-frame");
-
-  function openCvPreview() {
-    cvFrame.src = cvPath;
-    cvModal.classList.add("open");
-    cvModal.setAttribute("aria-hidden", "false");
-    document.body.classList.add("modal-open");
-    cvCloseButton.focus();
-  }
-
-  function closeCvPreview() {
-    cvModal.classList.remove("open");
-    cvModal.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("modal-open");
-  }
-
-  cvPreviewButton.addEventListener("click", openCvPreview);
-  cvCloseButton.addEventListener("click", closeCvPreview);
-  cvModal.addEventListener("click", (event) => {
-    if (event.target === cvModal) closeCvPreview();
-  });
-
-  window.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && cvModal.classList.contains("open")) {
-      closeCvPreview();
-    }
+  const content = cvModal.querySelector('.cv-preview-content');
+  const cvDialog = setupPortfolioDialog(cvModal, () => { content.innerHTML = ''; });
+  cvPreviewButton.setAttribute('aria-haspopup', 'dialog');
+  cvPreviewButton.addEventListener('click', () => {
+    const embed = document.createElement('embed');
+    embed.className = 'cv-preview-frame';
+    embed.src = cvPath;
+    embed.type = 'application/pdf';
+    embed.title = 'CV · David Rubio Moreno';
+    content.replaceChildren(embed);
+    cvDialog.open();
   });
 }

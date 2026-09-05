@@ -3,1269 +3,289 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio de David Rubio Moreno. Desarrollo de software y videojuegos, simulación, motores gráficos y herramientas en C++ y C#.">
+  <meta name="theme-color" content="#080c0e">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <title>Portfolio | David Rubio Moreno</title>
   <style>
+
     :root {
-      --bg: #05070d;
-      --bg-soft: #0a0e17;
-      --bg-elevated: #0d111a;
-      --text: #f0f2f5;
-      --text-dim: #b8bcc8;
-      --muted: #7a8092;
-      --accent: #00ff88;
-      --accent-dim: #00cc6a;
-      --accent-glow: rgba(0, 255, 136, 0.35);
-      --accent-warm: #ff6b35;
-      --accent-warm-dim: #e85a28;
-      --accent-warm-glow: rgba(255, 107, 53, 0.3);
-      --accent-deep: #7c3aed;
-      --accent-deep-dim: #6d28d9;
-      --accent-deep-glow: rgba(124, 58, 237, 0.28);
-      --panel: rgba(13, 17, 26, 0.9);
-      --panel-strong: #0c0f16;
-      --panel-border: rgba(255, 255, 255, 0.06);
-      --line: rgba(255, 255, 255, 0.08);
-      --shadow: 0 24px 80px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.02);
-      --shadow-lg: 0 32px 100px rgba(0, 0, 0, 0.6), 0 0 60px rgba(0, 255, 136, 0.08);
-      --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
-      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+      color-scheme: dark;
+      --bg: #080c0e;
+      --panel: #101719;
+      --panel-strong: #0b1113;
+      --text: #f2f5f2;
+      --text-dim: #bac6c2;
+      --muted: #97aaa3;
+      --accent: #73f3b5;
+      --accent-dim: #4bdda0;
+      --accent-glow: rgba(115, 243, 181, .12);
+      --line: #25332e;
+      --panel-border: #25332e;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-mono: 'JetBrains Mono', Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+    body { margin: 0; font-family: var(--font-sans); color: var(--text); background: var(--bg); line-height: 1.7; }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    img, video { max-width: 100%; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+    ::selection { background: var(--accent); color: var(--bg); }
+    .container, .nav { width: min(1240px, calc(100% - 80px)); margin-inline: auto; }
+    .container { position: relative; z-index: 1; }
+    .skip-link { position: fixed; top: 12px; left: 12px; z-index: 1100; padding: 12px 20px; background: var(--accent); color: var(--bg); border-radius: 8px; transform: translateY(-160%); }
+    .skip-link:focus { transform: none; }
+
+    .site-header { position: sticky; top: 0; z-index: 100; background: rgba(8, 12, 14, .94); border-bottom: 1px solid var(--line); backdrop-filter: blur(16px); }
+    .nav { min-height: 80px; display: flex; align-items: center; gap: 32px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; font-size: .9375rem; font-weight: 700; letter-spacing: -.025em; margin-right: auto; }
+    .brand::before { content: 'dr.'; display: grid; place-items: center; width: 40px; height: 40px; color: var(--accent); border: 1px solid var(--line); border-radius: 10px; font-family: var(--font-mono); font-size: 1.125rem; }
+    .nav-links { display: flex; align-items: center; gap: 26px; }
+    .nav-links a { display: inline-flex; align-items: center; min-height: 44px; font-size: .875rem; color: var(--text-dim); transition: color .2s; }
+    .nav-links a:hover, .nav-links a[aria-current] { color: var(--accent); }
+    .nav-actions { display: flex; align-items: center; gap: 8px; }
+    .lang-toggle { min-width: 76px; min-height: 44px; padding: 8px 10px; color: var(--muted); background: transparent; border: 1px solid var(--line); border-radius: 8px; font: 500 .8125rem var(--font-mono); }
+    .lang-toggle .active { color: var(--accent); }
+    .menu-toggle { display: none; width: 44px; height: 44px; padding: 11px; background: transparent; border: 1px solid var(--line); border-radius: 8px; }
+    .menu-toggle span { display: block; width: 20px; height: 2px; margin: 5px 0; background: var(--text); transition: transform .2s; }
+    .menu-toggle[aria-expanded='true'] span:first-child { transform: translateY(3.5px) rotate(45deg); }
+    .menu-toggle[aria-expanded='true'] span:last-child { transform: translateY(-3.5px) rotate(-45deg); }
+
+    section { padding: 96px 0; scroll-margin-top: 16px; }
+    section + section { border-top: 1px solid var(--line); }
+    .hero { position: relative; isolation: isolate; overflow: hidden; padding: 92px 0 100px; }
+    .hero::before { content: ''; position: absolute; inset: 0 0 0 26%; z-index: -1; background: linear-gradient(90deg, var(--bg), rgba(8,12,14,.5) 58%, rgba(8,12,14,.35)), linear-gradient(0deg, var(--bg), transparent 28%, transparent 75%, var(--bg)), url('assets/images/earth_bg.webp') 65% center / cover; opacity: .8; }
+    .hero canvas { opacity: .35; }
+    .hero-content { position: relative; }
+    .eyebrow { display: flex; align-items: center; gap: 10px; margin: 0 0 26px; color: var(--accent); font: 500 .8125rem var(--font-mono); letter-spacing: .15em; text-transform: uppercase; }
+    .eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+    h1, h2, h3 { margin: 0; line-height: 1.14; letter-spacing: -.045em; }
+    h1 { max-width: 970px; font-size: clamp(2.25rem, 5.5vw, 4.75rem); font-weight: 700; text-wrap: balance; }
+    .hero-content > p:not(.eyebrow) { max-width: 660px; margin: 28px 0 32px; color: var(--text-dim); font-size: 1.0625rem; line-height: 1.8; }
+    .button-row, .cv-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+    .button { display: inline-flex; align-items: center; justify-content: center; gap: 20px; min-height: 50px; padding: 12px 24px; background: var(--accent); color: var(--bg); border: 1px solid var(--accent); border-radius: 8px; font-size: .875rem; font-weight: 700; transition: background .2s, transform .2s; }
+    .button::after { content: '↗'; font-size: 1.1rem; }
+    .button:hover { background: #9bf8ca; transform: translateY(-2px); }
+    .button.secondary { background: rgba(8,12,14,.6); border-color: #52645b; color: var(--text); }
+    .button.secondary:hover { background: var(--panel); border-color: var(--accent); }
+    .section-title { margin-bottom: 36px; }
+    .section-title h2 { display: flex; align-items: baseline; gap: 20px; font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 600; }
+    .section-title h2::before { content: var(--section-index); font: 400 .8125rem var(--font-mono); color: var(--accent); letter-spacing: 0; }
+    #portfolio { --section-index: '01 /'; }
+    #sobre-mi { --section-index: '02 /'; }
+    #skills { --section-index: '03 /'; }
+    #contribuciones { --section-index: '04 /'; }
+    #contacto { --section-index: '05 /'; }
+    .section-title p { max-width: 720px; margin: 18px 0 0; color: var(--text-dim); font-size: 1rem; }
+
+    .portfolio-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; counter-reset: project; }
+    .project-card { display: flex; flex-direction: column; min-width: 0; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); overflow: hidden; counter-increment: project; transition: border-color .2s; }
+    .project-card:hover { border-color: #527965; }
+    .project-card:first-child { grid-column: 1 / -1; display: grid; grid-template-columns: 1.12fr 1fr; }
+    .project-media { position: relative; aspect-ratio: 16 / 9; background: var(--panel-strong); overflow: hidden; }
+    .project-card:first-child .project-media { aspect-ratio: auto; min-height: 360px; }
+    .project-video { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .project-body { display: flex; flex: 1; flex-direction: column; align-items: start; padding: 28px; }
+    .project-body::before { content: counter(project, decimal-leading-zero); margin-bottom: 16px; font: 400 .75rem var(--font-mono); color: var(--accent); }
+    .project-body h3 { font-size: 1.625rem; letter-spacing: -.035em; }
+    .project-body p { margin: 18px 0 26px; color: var(--text-dim); font-size: 1rem; line-height: 1.75; }
+    .project-links-row { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; width: 100%; margin-top: auto; }
+    .project-link, .project-action, .project-modal-links a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 9px 14px; border: 1px solid #3e5147; border-radius: 7px; font-size: .875rem; font-weight: 600; color: var(--text-dim); background: transparent; transition: border-color .2s, color .2s, background .2s; }
+    .project-link::after, .project-modal-links a::after { content: '↗'; margin-left: 9px; color: var(--muted); }
+    .project-action { margin-left: auto; color: var(--accent); border-color: #456f57; background: rgba(115,243,181,.04); }
+    .project-action::after { content: '→'; margin-left: 10px; }
+    .project-link:hover, .project-action:hover, .project-modal-links a:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-glow); }
+    .project-media-placeholder { width: 100%; height: 100%; min-height: 180px; display: grid; place-items: center; font: 600 3rem var(--font-mono); color: var(--accent); }
+    .project-media-placeholder::before { content: attr(data-initials); }
+
+    .about-grid { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr); gap: 36px; align-items: start; }
+    .panel { min-width: 0; padding: 32px; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); isolation: isolate; }
+    .panel h3 { margin-bottom: 22px; font-size: 1.375rem; }
+    .panel p { margin: 0; font-size: 1rem; color: var(--text-dim); }
+    .panel p + p { margin-top: 20px; }
+    .about-grid > article { background: transparent; border: 0; padding: 0; }
+    .about-grid aside { border-top: 2px solid var(--accent); }
+    .cv-list { list-style: none; margin: 0 0 28px; padding: 0; color: var(--text-dim); }
+    .cv-actions .button { flex: 1 1 auto; }
+
+    .skills-carousel { overflow-x: auto; padding: 4px 0 18px; scrollbar-color: #456551 transparent; scrollbar-width: thin; scroll-snap-type: x proximity; }
+    .skills-carousel { cursor: grab; user-select: none; }
+    .skills-carousel.is-dragging { cursor: grabbing; scroll-snap-type: none; }
+    main[tabindex="-1"]:focus, section[tabindex="-1"]:focus { outline: none; }
+    .skills-track { display: flex; width: max-content; gap: 14px; }
+    .skill-item { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 0 0 116px; width: 116px; min-height: 126px; padding: 18px 8px; gap: 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--panel); scroll-snap-align: start; }
+    .skill-item img { display: block; width: 46px; height: 46px; object-fit: contain; pointer-events: none; }
+    .skill-item span { font-size: .75rem; color: var(--text-dim); text-align: center; line-height: 1.3; }
+    .skill-item[aria-hidden='true'] { display: none; }
+    .soft-skills-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .soft-skill-card { border: 1px solid var(--line); border-radius: 6px; padding: 8px 13px; font-size: .875rem; color: var(--text-dim); }
+
+    .contributions-panel { display: grid; gap: 20px; }
+    .contribution-years { display: flex; flex-wrap: wrap; gap: 8px; }
+    .contribution-year { min-width: 64px; min-height: 44px; border: 1px solid var(--line); border-radius: 7px; background: transparent; color: var(--text-dim); font: 500 .875rem var(--font-mono); }
+    .contribution-year:hover, .contribution-year.active { color: var(--accent); border-color: var(--accent); background: var(--accent-glow); }
+    .contribution-summary { font-size: 1rem; color: var(--text-dim); }
+    .calendar-wrapper { min-width: 0; max-width: 100%; overflow-x: auto; padding: 14px 0; scrollbar-width: thin; scrollbar-color: #456551 transparent; }
+    .calendar { display: grid; grid-template-columns: 32px repeat(54, 14px); grid-template-rows: auto repeat(7, 14px); gap: 3px; width: max-content; }
+    .calendar-month, .calendar-weekday { font: 400 .75rem var(--font-mono); color: var(--muted); line-height: 1; }
+    .calendar-month { align-self: end; padding-bottom: 4px; white-space: nowrap; }
+    .calendar-weekday { align-self: center; text-align: right; padding-right: 4px; }
+    .contribution-day { width: 14px; height: 14px; border-radius: 3px; background: transparent; border: 1px solid #24342c; }
+    .contribution-day:hover { outline: 2px solid var(--accent); outline-offset: -1px; }
+    .contribution-day[data-level='1'] { background: rgba(115,243,181,.15); }
+    .contribution-day[data-level='2'] { background: rgba(115,243,181,.35); }
+    .contribution-day[data-level='3'] { background: rgba(115,243,181,.65); }
+    .contribution-day[data-level='4'] { background: var(--accent); }
+    .contribution-legend { display: flex; align-items: center; gap: 7px; font-size: .8125rem; color: var(--muted); }
+    .contribution-legend .contribution-day { width: 12px; height: 12px; }
+
+    .contact { background: linear-gradient(120deg, #0f1e17, var(--bg) 70%); }
+    .contact .section-title p { font-size: clamp(1.75rem, 3.5vw, 3rem); line-height: 1.3; letter-spacing: -.04em; color: var(--text); max-width: 800px; margin-top: 32px; }
+    .contact-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+    .contact-link { display: inline-flex; align-items: center; justify-content: space-between; gap: 28px; min-height: 52px; padding: 12px 20px; border: 1px solid #52645b; border-radius: 8px; font-size: .9375rem; }
+    .contact-link::after { content: '↗'; color: var(--accent); }
+    .contact-link:first-child { color: var(--accent); border-color: #567e64; }
+    .contact-link:hover { background: var(--accent-glow); border-color: var(--accent); }
+    .site-footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--muted); font: 400 .75rem var(--font-mono); }
+    .site-footer .container { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+
+    .project-modal { display: none; position: fixed; inset: 0; z-index: 1000; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,.8); backdrop-filter: blur(12px); }
+    .project-modal.open { display: flex; }
+    .project-modal-dialog { width: min(1160px, 100%); max-height: calc(100dvh - 48px); overflow: auto; overscroll-behavior: contain; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); }
+    .project-modal-header { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; background: var(--panel); border-bottom: 1px solid var(--line); }
+    .project-modal-header h2 { font-size: 1.5rem; overflow-wrap: anywhere; }
+    .project-modal-close { flex: 0 0 44px; width: 44px; height: 44px; padding: 0; border: 1px solid #52645b; border-radius: 8px; background: transparent; color: var(--text); font-size: 1.5rem; }
+    .project-modal-close:hover { border-color: var(--accent); color: var(--accent); }
+    .project-modal-content { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 28px; padding: 28px; align-items: start; }
+    .project-modal-visual { min-width: 0; }
+    .project-video-alternative { margin: 14px 0 0; }
+    .project-video-alternative[hidden] { display: none; }
+    .project-modal-media { width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 10px; background: #000; }
+    .project-modal-media:has(iframe) { min-height: 200px; }
+    .project-modal-media iframe, .project-modal-media video { display: block; width: 100%; height: 100%; border: 0; object-fit: contain; }
+    .project-modal-info { min-width: 0; }
+    .project-modal-info p { margin: 0; color: var(--text-dim); font-size: 1rem; line-height: 1.8; }
+    .project-modal-contributions { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--line); }
+    .project-modal-contributions h4 { margin: 0 0 12px; font-size: .875rem; color: var(--accent); }
+    .project-modal-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+    .cv-preview-frame { display: block; width: 100%; height: 65dvh; border: 0; background: var(--panel-strong); }
+    .cv-preview-fallback { padding: 20px 24px; border-top: 1px solid var(--line); }
+    .cv-preview-fallback p { margin: 0 0 14px; color: var(--text-dim); }
+    body.modal-open { overflow: hidden; }
+
+    @media (max-width: 1050px) {
+      .nav { gap: 20px; }
+      .nav-links { gap: 18px; }
+      .brand { font-size: .875rem; }
+      .brand::before { display: none; }
+      .project-card:first-child { grid-template-columns: 1fr 1fr; }
+      .project-body { padding: 24px; }
+      .project-action { margin-left: 0; }
+      .project-modal-content { grid-template-columns: 1fr; }
+      .project-modal-media { max-width: 780px; margin-inline: auto; }
     }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    @keyframes soft-pulse {
-      0%,
-      100% {
-        opacity: 0.38;
-        transform: translateX(-50%) scaleX(0.92);
-      }
-
-      50% {
-        opacity: 1;
-        transform: translateX(-50%) scaleX(1);
-      }
-    }
-
-    body {
-      margin: 0;
-      font-family: var(--font-sans);
-      color: var(--text);
-      background-color: var(--bg);
-      background-image:
-        radial-gradient(ellipse 80% 50% at 20% 20%, rgba(0, 255, 136, 0.06), transparent),
-        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(124, 58, 237, 0.05), transparent),
-        radial-gradient(ellipse 50% 30% at 50% 100%, rgba(255, 107, 53, 0.04), transparent),
-        linear-gradient(180deg, #05070d 0%, #0a0e17 50%, #05070d 100%);
-      background-attachment: fixed;
-      line-height: 1.65;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      border-bottom: 1px solid var(--panel-border);
-      background: rgba(5, 7, 13, 0.8);
-      backdrop-filter: blur(20px) saturate(180%);
-    }
-
-    .nav {
-      width: min(1320px, calc(100% - 32px));
-      margin: 0 auto;
-      min-height: 68px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-    }
-
-    .brand {
-      font-family: var(--font-mono);
-      font-weight: 700;
-      font-size: 1.1rem;
-      letter-spacing: -0.02em;
-      color: var(--text);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .brand::after {
-      content: "()";
-      color: var(--accent);
-      font-size: 0.9em;
-    }
-
-    .nav-links {
-      font-family: var(--font-mono);
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      color: var(--muted);
-      font-size: 0.85rem;
-      font-weight: 500;
-    }
-
-    .nav-links a {
-      position: relative;
-      padding: 4px 0;
-    }
-
-    .nav-links a::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-warm));
-      transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-
-    .nav-links a:hover {
-      color: var(--accent);
-    }
-
-    .nav-links a:hover::after {
-      width: 100%;
-    }
-
-    .lang-toggle {
-      background: none;
-      border: 1px solid var(--panel-border);
-      border-radius: 6px;
-      padding: 2px 8px;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      font-weight: 600;
-      cursor: pointer;
-      color: var(--muted);
-      transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
-      line-height: 1.6;
-    }
-
-    .lang-toggle:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .lang-toggle span {
-      transition: color 0.25s ease;
-    }
-
-    .lang-toggle span.active {
-      color: var(--accent);
-    }
-
-    .nav-links a,
-    .brand,
-    .button,
-    .contact-link,
-    .project-link {
-      transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-
-    .hero {
-      min-height: calc(100vh - 68px);
-      display: grid;
-      align-items: center;
-      padding: 86px 0;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse at 15% 30%, rgba(0, 255, 136, 0.08), transparent 40%),
-        radial-gradient(ellipse at 85% 70%, rgba(124, 58, 237, 0.06), transparent 35%),
-        radial-gradient(ellipse at 50% 100%, rgba(255, 107, 53, 0.05), transparent 30%);
-      pointer-events: none;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: url("assets/images/earth_bg.webp") center/cover no-repeat;
-      opacity: 0.06;
-      mix-blend-mode: screen;
-      pointer-events: none;
-    }
-
-    .container {
-      width: min(1320px, calc(100% - 32px));
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-content {
-      max-width: 860px;
-      padding-top: 24px;
-    }
-
-    .eyebrow {
-      font-family: var(--font-mono);
-      font-weight: 600;
-      font-size: 0.75rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin: 0 0 20px;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .eyebrow::before {
-      content: "//";
-      color: var(--accent-warm);
-      opacity: 0.7;
-    }
-
-    h1,
-    h2,
-    h3 {
-      line-height: 1.08;
-      margin: 0;
-      letter-spacing: -0.02em;
-    }
-
-    h1 {
-      font-size: clamp(3rem, 8.5vw, 6.5rem);
-      max-width: 980px;
-      font-weight: 800;
-      background: linear-gradient(135deg, #ffffff 0%, var(--accent) 45%, var(--accent-warm) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero p {
-      max-width: 640px;
-      margin: 28px 0 36px;
-      color: var(--text-dim);
-      font-size: 1.2rem;
-      line-height: 1.75;
-      font-weight: 400;
-    }
-
-    .button-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      align-items: center;
-    }
-
-    .button {
-      font-family: var(--font-mono);
-      font-size: 0.88rem;
-      font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      min-height: 48px;
-      padding: 0 28px;
-      border-radius: 10px;
-      border: 1px solid transparent;
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dim) 100%);
-      color: #05070d;
-      box-shadow:
-        0 4px 24px var(--accent-glow),
-        0 0 0 1px rgba(255, 255, 255, 0.08) inset;
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-
-    .button::before {
-      content: "[";
-      opacity: 0.5;
-    }
-
-    .button::after {
-      content: "]";
-      opacity: 0.5;
-    }
-
-    .button:hover {
-      transform: translateY(-3px) scale(1.02);
-      box-shadow:
-        0 8px 32px var(--accent-glow),
-        0 0 0 1px rgba(255, 255, 255, 0.12) inset,
-        0 0 40px var(--accent-glow);
-    }
-
-    .button:active {
-      transform: translateY(-1px) scale(0.98);
-    }
-
-    .button.secondary {
-      font-family: var(--font-mono);
-      font-size: 0.88rem;
-      font-weight: 700;
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--line);
-      box-shadow:
-        0 0 0 1px rgba(255, 255, 255, 0.04) inset;
-    }
-
-    .button.secondary::before,
-    .button.secondary::after {
-      opacity: 0.4;
-    }
-
-    .button.secondary:hover {
-      background: rgba(255, 255, 255, 0.04);
-      border-color: var(--accent-warm);
-      color: var(--accent-warm);
-      box-shadow:
-        0 4px 20px var(--accent-warm-glow),
-        0 0 0 1px rgba(255, 107, 53, 0.15) inset;
-    }
-
-    section {
-      position: relative;
-      padding: 96px 0;
-    }
-
-    section::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 50%;
-      width: min(1120px, calc(100% - 32px));
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent), var(--accent-warm), transparent);
-      opacity: 0.3;
-    }
-
-    .section-title {
-      margin-bottom: 40px;
-      position: relative;
-    }
-
-    .section-title h2 {
-      font-family: var(--font-mono);
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      color: var(--text);
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .section-title h2::before {
-      content: "//";
-      font-size: 0.7em;
-      color: var(--accent-warm);
-      opacity: 0.6;
-    }
-
-    .section-title p {
-      max-width: 650px;
-      margin: 16px 0 0 30px;
-      color: var(--muted);
-      font-size: 1.05rem;
-      line-height: 1.7;
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1.4fr 0.8fr;
-      gap: 28px;
-      align-items: start;
-    }
-
-    .panel,
-    .project-card {
-      border: 1px solid var(--panel-border);
-      border-radius: 14px;
-      background: var(--panel);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(20px) saturate(180%);
-      transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-
-    .panel {
-      padding: 36px;
-    }
-
-    .panel:hover {
-      transform: translateY(-6px);
-      border-color: var(--accent);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .panel h3 {
-      font-family: var(--font-mono);
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .panel h3::before {
-      content: ">";
-      color: var(--accent);
-      font-size: 1.2em;
-    }
-
-    .panel p {
-      color: var(--text-dim);
-      margin: 0;
-      line-height: 1.75;
-      font-size: 1.02rem;
-    }
-
-    .cv-list {
-      padding: 0;
-      margin: 20px 0 28px;
-      list-style: none;
-    }
-
-    .cv-list li {
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--panel-border);
-      color: var(--text-dim);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      transition: all 0.2s ease;
-    }
-
-    .cv-list li:last-child {
-      border-bottom: none;
-    }
-
-    .cv-list li::before {
-      content: "▸";
-      color: var(--accent);
-      font-size: 0.7em;
-      opacity: 0.7;
-    }
-
-    .cv-list li:hover {
-      background: rgba(0, 255, 136, 0.03);
-      color: var(--text);
-      padding-left: 20px;
-    }
-
-    .skills-carousel {
-      width: 100%;
-      overflow: hidden;
-      padding: 32px 0;
-      cursor: grab;
-      user-select: none;
-      mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-    }
-
-    .skills-carousel:active {
-      cursor: grabbing;
-    }
-
-    .skills-track {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      width: max-content;
-      will-change: transform;
-    }
-
-    .skill-item {
-      width: 120px;
-      height: 120px;
-      flex: 0 0 auto;
-      border: 1px solid var(--panel-border);
-      border-radius: 12px;
-      background:
-        linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01)),
-        var(--panel-strong);
-      box-shadow:
-        0 8px 24px rgba(0, 0, 0, 0.3),
-        0 0 0 1px rgba(255, 255, 255, 0.02) inset;
-      display: grid;
-      place-items: center;
-      transform-origin: center;
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-
-    .skill-item:hover {
-      border-color: var(--accent);
-      box-shadow:
-        0 12px 32px var(--accent-glow),
-        0 0 0 1px rgba(0, 255, 136, 0.2) inset;
-      transform: scale(1.06);
-    }
-
-    .skill-item img {
-      width: 58px;
-      height: 58px;
-      object-fit: contain;
-      pointer-events: none;
-      filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
-      transition: transform 0.3s ease;
-    }
-
-    .skill-item:hover img {
-      transform: scale(1.1);
-    }
-
-    .soft-skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-      gap: 14px;
-      margin-top: 36px;
-    }
-
-    .soft-skill-card {
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      font-weight: 600;
-      padding: 16px 20px;
-      border: 1px solid var(--panel-border);
-      border-radius: 10px;
-      background:
-        linear-gradient(145deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0)),
-        var(--panel-strong);
-      text-align: center;
-      color: var(--text-dim);
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .soft-skill-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-warm));
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-
-    .soft-skill-card:hover {
-      border-color: var(--accent);
-      background:
-        linear-gradient(145deg, rgba(0, 255, 136, 0.04), rgba(124, 58, 237, 0.02)),
-        var(--panel-strong);
-      color: var(--text);
-      transform: translateY(-4px);
-      box-shadow:
-        0 12px 32px rgba(0, 0, 0, 0.4),
-        0 0 0 1px rgba(0, 255, 136, 0.15) inset;
-    }
-
-    .soft-skill-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    .portfolio-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 22px;
-    }
-
-    .project-card {
-      overflow: hidden;
-      display: grid;
-      grid-template-columns: minmax(360px, 48%) 1fr;
-      min-height: 320px;
-      opacity: 0;
-      transform: translateX(52px);
-      transition: opacity 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .project-card.is-visible {
-      opacity: 1;
-      transform: translateX(0);
-    }
-
-    .project-card.is-visible:hover {
-      transform: translateY(-6px);
-      border-color: var(--accent);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .project-card:hover .project-media {
-      filter: saturate(1.1) brightness(1.05);
-    }
-
-    .project-media {
-      position: relative;
-      min-height: 100%;
-      aspect-ratio: 16 / 9;
-      overflow: hidden;
-      transition: filter 0.3s ease;
-      background: var(--panel-strong);
-    }
-
-    .project-media::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(90deg, rgba(5, 7, 13, 0.1), rgba(5, 7, 13, 0.4)),
-        linear-gradient(180deg, transparent 60%, rgba(5, 7, 13, 0.5));
-      pointer-events: none;
-    }
-
-    .project-media::before {
-      content: "";
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      right: 12px;
-      height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-warm));
-      opacity: 0;
-      border-radius: 1px;
-      transition: opacity 0.3s ease;
-      pointer-events: none;
-    }
-
-    .project-card:hover .project-media::before {
-      opacity: 0.6;
-    }
-
-    .project-video {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
-      transform: scale(1.01);
-      transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-
-    .project-card:hover .project-video {
-      transform: scale(1.05);
-    }
-
-    .project-body {
-      padding: 32px 36px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .project-body h3 {
-      font-family: var(--font-sans);
-      font-size: 1.6rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      color: var(--text);
-      margin-bottom: 16px;
-    }
-
-    .project-body p {
-      color: var(--text-dim);
-      margin: 0 0 24px;
-      line-height: 1.75;
-      font-size: 1.02rem;
-    }
-
-    .project-links-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: auto;
-    }
-
-    .project-link {
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--muted);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 14px;
-      border: 1px solid var(--panel-border);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.02);
-      transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-
-    .project-link::before {
-      content: "[";
-      opacity: 0.4;
-    }
-
-    .project-link::after {
-      content: "]";
-      opacity: 0.4;
-    }
-
-    .project-link:hover {
-      color: var(--accent);
-      border-color: var(--accent);
-      background: rgba(0, 255, 136, 0.06);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px var(--accent-glow);
-    }
-
-    .project-action {
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      font-weight: 700;
-      min-height: 44px;
-      padding: 0 22px;
-      border: 1px solid var(--accent);
-      border-radius: 100px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-dim));
-      color: #05070d;
-      cursor: pointer;
-      box-shadow: 0 4px 20px var(--accent-glow);
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-
-    .project-action:hover,
-    .project-action:focus-visible {
-      color: #05070d;
-      border-color: var(--accent);
-      box-shadow: 0 8px 30px var(--accent-glow), 0 0 40px var(--accent-glow);
-      transform: translateY(-3px) scale(1.03);
-      outline: none;
-    }
-
-    .project-links-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 20px;
-    }
-
-    .project-card .project-links-row .project-link {
-      display: inline-flex;
-    }
-
-    .project-media-placeholder {
-      width: 100%;
-      height: 100%;
-      display: grid;
-      place-items: center;
-      background:
-        linear-gradient(135deg, var(--panel-strong) 0%, var(--bg-elevated) 100%);
-      font-size: 3.5rem;
-      font-weight: 800;
-      font-family: var(--font-mono);
-      border-right: 1px solid var(--panel-border);
-      position: relative;
-    }
-
-    .project-media-placeholder::before {
-      content: attr(data-initials);
-      position: absolute;
-      font-family: var(--font-mono);
-      letter-spacing: 4px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-warm));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      opacity: 0.8;
-    }
-
-    .project-modal {
-      position: fixed;
-      inset: 0;
-      z-index: 1000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      background: rgba(3, 3, 3, 0.85);
-      backdrop-filter: blur(16px) saturate(180%);
-    }
-
-    .project-modal.open {
-      display: flex;
-      animation: modalIn 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-
-    @keyframes modalIn {
-      from { opacity: 0; transform: scale(0.98); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    .project-modal-dialog {
-      width: min(1280px, 100%);
-      max-height: min(96vh, calc(100vh - 24px));
-      min-height: min(600px, calc(100vh - 48px));
-      overflow: auto;
-      border: 1px solid var(--panel-border);
-      border-radius: 16px;
-      background: var(--panel);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .project-modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 24px 28px;
-      border-bottom: 1px solid var(--panel-border);
-    }
-
-    .project-modal-close {
-      font-family: var(--font-mono);
-      font-size: 1.2rem;
-      font-weight: 700;
-      width: 44px;
-      height: 44px;
-      border: 1px solid var(--panel-border);
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.03);
-      color: var(--muted);
-      line-height: 1;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .project-modal-close:hover {
-      color: var(--accent-warm);
-      border-color: var(--accent-warm);
-      background: rgba(255, 107, 53, 0.08);
-    }
-
-    .project-modal-content {
-      display: grid;
-      grid-template-columns: minmax(360px, 62%) 1fr;
-      gap: 28px;
-      padding: 28px;
-    }
-
-    .project-modal-media {
-      aspect-ratio: 16 / 9;
-      max-height: 70vh;
-      border: 1px solid var(--panel-border);
-      border-radius: 12px;
-      overflow: hidden;
-      background: var(--panel-strong);
-    }
-
-    .project-modal-media iframe,
-    .project-modal-media video {
-      width: 100%;
-      height: 100%;
-      min-height: 380px;
-      display: block;
-      border: 0;
-      background: #000;
-    }
-
-    .project-modal-media video {
-      object-fit: cover;
-    }
-
-    .project-modal-media .project-media-placeholder {
-      min-height: 380px;
-    }
-
-    .cv-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .cv-preview-frame {
-      width: 100%;
-      height: min(76vh, 760px);
-      border: 0;
-      display: block;
-      border-radius: 0 0 14px 14px;
-    }
-
-    .project-modal-info {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .project-modal-info p {
-      color: var(--text-dim);
-      margin: 0 0 28px;
-      line-height: 1.8;
-      font-size: 1.02rem;
-    }
-
-    .project-modal-contributions {
-      margin-top: 28px;
-      padding-top: 24px;
-      border-top: 1px solid var(--panel-border);
-    }
-
-    .project-modal-contributions h4 {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin: 0 0 12px;
-      opacity: 0.7;
-    }
-
-    .project-modal-contributions p {
-      color: var(--text-dim);
-      margin: 0;
-      line-height: 1.8;
-      font-size: 0.98rem;
-    }
-
-    .project-modal-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 28px;
-    }
-
-    .project-modal-links a {
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      font-weight: 700;
-      min-height: 44px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 0 20px;
-      border: 1px solid var(--panel-border);
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.02);
-      color: var(--muted);
-      transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-
-    .project-modal-links a::before {
-      content: "[";
-      opacity: 0.4;
-    }
-
-    .project-modal-links a::after {
-      content: "]";
-      opacity: 0.4;
-    }
-
-    .project-modal-links a:hover {
-      color: var(--accent);
-      border-color: var(--accent);
-      background: rgba(0, 255, 136, 0.06);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px var(--accent-glow);
-    }
-
-    body.modal-open {
-      overflow: hidden;
-    }
-
-    .contact {
-      position: relative;
-      background:
-        radial-gradient(ellipse at 80% 20%, rgba(124, 58, 237, 0.08), transparent 40%),
-        radial-gradient(ellipse at 20% 80%, rgba(255, 107, 53, 0.06), transparent 35%),
-        var(--bg);
-    }
-
-    .contact .section-title p {
-      color: var(--muted);
-    }
-
-    .contact-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-top: 32px;
-    }
-
-    .contact-link {
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      font-weight: 700;
-      min-height: 48px;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 0 24px;
-      border: 1px solid var(--panel-border);
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.02);
-      color: var(--text-dim);
-      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-
-    .contact-link::before {
-      content: "[";
-      opacity: 0.4;
-    }
-
-    .contact-link::after {
-      content: "]";
-      opacity: 0.4;
-    }
-
-    .contact-link:hover {
-      color: var(--accent);
-      border-color: var(--accent);
-      background: rgba(0, 255, 136, 0.06);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 24px var(--accent-glow);
-    }
-    .site-footer {
-      padding: 28px 0;
-      border-top: 1px solid var(--panel-border);
-      background: var(--bg);
-      color: var(--muted);
-      font-size: 0.85rem;
-      font-family: var(--font-mono);
-    }
-
     @media (max-width: 820px) {
-      .nav {
-        align-items: flex-start;
-        flex-direction: column;
-        padding: 16px 0;
-      }
-
-      .nav-links {
-        width: 100%;
-        overflow-x: auto;
-        padding-bottom: 4px;
-      }
-
-      .hero {
-        min-height: auto;
-        background-position: 62% center;
-      }
-
-      .about-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .project-card {
-        grid-template-columns: 1fr;
-      }
-
-      .project-modal-content {
-        grid-template-columns: 1fr;
-      }
-
-      .project-media {
-        min-height: auto;
-        aspect-ratio: 16 / 9;
-      }
-
-      .skill-item {
-        width: 104px;
-        height: 104px;
-      }
-
-      .skill-item img {
-        width: 54px;
-        height: 54px;
-      }
+      .container, .nav { width: calc(100% - 48px); }
+      .nav { min-height: 72px; flex-wrap: wrap; gap: 0; }
+      .nav-actions { margin-left: auto; }
+      .brand::before { display: grid; }
+      .nav-links { order: 3; width: 100%; flex-wrap: wrap; gap: 8px 24px; padding: 12px 0; border-top: 1px solid var(--line); }
+      .nav-links a { min-height: 48px; font-size: 1rem; }
+      .nav-enhanced .menu-toggle { display: block; }
+      .nav-enhanced .nav-links { display: none; }
+      .nav-enhanced .nav-links.is-open { display: grid; grid-template-columns: 1fr 1fr; }
+      .hero { padding: 64px 0 72px; }
+      .hero::before { inset: 0; opacity: .45; }
+      h1 { max-width: 690px; font-size: clamp(2.25rem, 6.2vw, 3.5rem); }
+      section { padding: 72px 0; }
+      .portfolio-grid { gap: 20px; }
+      .project-card:first-child { display: flex; }
+      .project-card:first-child .project-media { aspect-ratio: 16 / 9; min-height: 0; }
+      .project-body h3 { font-size: 1.4rem; }
+      .project-links-row { gap: 8px; }
+      .about-grid { grid-template-columns: 1fr; gap: 28px; }
+      .cv-actions .button { flex: 0 1 auto; }
+      .panel { padding: 24px; }
+      .section-title h2 { gap: 14px; }
     }
-
-    @media (max-width: 520px) {
-      section {
-        padding: 64px 0;
-      }
-
-      h1 {
-        font-size: 3rem;
-      }
-
-      .hero {
-        padding: 58px 0;
-      }
-
-      .project-body {
-        padding: 22px;
-      }
-
-      .button,
-      .button.secondary,
-      .contact-link {
-        width: 100%;
-      }
+    @media (max-width: 600px) {
+      .container, .nav { width: calc(100% - 40px); }
+      .nav { min-height: 68px; }
+      .brand { max-width: calc(100% - 144px); font-size: .875rem; line-height: 1.4; }
+      .brand::before { display: none; }
+      .hero { padding: 48px 0 56px; }
+      .eyebrow { margin-bottom: 22px; font-size: .75rem; }
+      h1 { font-size: clamp(2.125rem, 8.8vw, 3rem); letter-spacing: -.045em; text-wrap: initial; }
+      .hero-content > p:not(.eyebrow) { font-size: 1rem; margin: 24px 0 28px; line-height: 1.75; }
+      .button-row { align-items: stretch; }
+      .button-row .button { flex: 1 1 auto; padding-inline: 16px; gap: 14px; }
+      section { padding: 56px 0; }
+      .section-title { margin-bottom: 28px; }
+      .section-title h2 { font-size: 1.875rem; }
+      .section-title p { margin-top: 16px; }
+      .portfolio-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+      .project-body { padding: 22px; }
+      .project-body h3 { font-size: 1.5rem; }
+      .project-body p { margin: 16px 0 22px; }
+      .project-links-row .project-action { flex: 1 0 100%; }
+      .project-links-row .project-link { flex: 1 1 auto; }
+      .project-body::before { margin-bottom: 12px; }
+      .panel { padding: 22px; }
+      .cv-actions .button { flex: 1 1 auto; }
+      .soft-skills-grid { gap: 8px; }
+      .soft-skill-card { padding: 7px 10px; }
+      .contribution-years { gap: 7px; }
+      .contribution-year { min-width: 56px; flex: 1; }
+      .contact-actions { gap: 10px; }
+      .contact-link { flex: 1 1 auto; }
+      .contact-link:first-child { flex-basis: 100%; }
+      .project-modal { padding: 10px; }
+      .project-modal-dialog { max-height: calc(100dvh - 20px); border-radius: 12px; }
+      .project-modal-header { padding: 14px 16px; }
+      .project-modal-header h2 { font-size: 1.25rem; }
+      .project-modal-content { padding: 16px; gap: 22px; }
+      .project-modal-links a { flex: 1 1 auto; }
+      .cv-preview-fallback { padding: 18px; }
     }
-
     @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      *,
-      *::before,
-      *::after {
-        animation: none !important;
-        transition: none !important;
-      }
-    }
-
-    .contributions-panel {
-      display: grid;
-      gap: 18px;
-    }
-
-    .contribution-years {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .contribution-year {
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      font-weight: 700;
-      min-height: 38px;
-      padding: 0 16px;
-      border: 1px solid var(--panel-border);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.03);
-      color: var(--muted);
-      cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-
-    .contribution-year:hover,
-    .contribution-year.active {
-      border-color: var(--accent);
-      background: rgba(0, 255, 136, 0.08);
-      color: var(--accent);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px var(--accent-glow);
-    }
-
-    .contribution-summary {
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .calendar-wrapper {
-      overflow-x: auto;
-      padding: 14px 0;
-    }
-
-    .calendar {
-      display: grid;
-      grid-template-columns: 32px repeat(54, 14px);
-      grid-template-rows: auto repeat(7, 14px);
-      gap: 3px;
-      width: max-content;
-    }
-
-    .calendar-month {
-      font-size: 0.75rem;
-      color: var(--muted);
-      font-family: var(--font-mono);
-      align-self: end;
-      padding-bottom: 2px;
-      white-space: nowrap;
-      line-height: 1;
-    }
-
-    .calendar-weekday {
-      font-size: 0.7rem;
-      color: var(--muted);
-      font-family: var(--font-mono);
-      align-self: center;
-      text-align: right;
-      padding-right: 4px;
-      line-height: 1;
-    }
-
-    .contribution-day {
-      width: 14px;
-      height: 14px;
-      border-radius: 3px;
-      background: transparent;
-      border: 1px solid var(--panel-strong);
-      transition: all 0.15s ease;
-      cursor: default;
-    }
-
-    .contribution-day:hover {
-      outline: 2px solid var(--accent);
-      outline-offset: -1px;
-      z-index: 1;
-    }
-
-    .contribution-day[data-level="1"] {
-      background: rgba(0, 255, 136, 0.12);
-    }
-
-    .contribution-day[data-level="2"] {
-      background: rgba(0, 255, 136, 0.3);
-    }
-
-    .contribution-day[data-level="3"] {
-      background: rgba(0, 255, 136, 0.55);
-    }
-
-    .contribution-day[data-level="4"] {
-      background: var(--accent);
-    }
-
-    .contribution-legend {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
-
-    .contribution-legend span:not(:first-child):not(:last-child) {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      border-radius: 2px;
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
     }
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#contenido" data-i18n="nav.skip">Saltar al contenido</a>
   <header class="site-header">
     <nav class="nav" data-i18n-aria-label="nav.aria" aria-label="Navegacion principal">
       <a class="brand" href="#inicio">David Rubio Moreno</a>
-      <div class="nav-links">
-        <a href="#sobre-mi" data-i18n="nav.about">Sobre mí</a>
-        <a href="#contribuciones">GitHub</a>
-        <a href="#skills" data-i18n="nav.skills">Skills</a>
+      <div class="nav-links" id="nav-links">
         <a href="#portfolio">Portfolio</a>
+        <a href="#sobre-mi" data-i18n="nav.about">Sobre mí</a>
+        <a href="#skills" data-i18n="nav.skills">Skills</a>
+        <a href="#contribuciones">GitHub</a>
         <a href="#contacto" data-i18n="nav.contact">Contacto</a>
-        <button class="lang-toggle" type="button" aria-label="Cambiar idioma">
+      </div>
+      <div class="nav-actions">
+        <button class="lang-toggle" type="button" data-i18n-aria-label="nav.language" aria-label="Cambiar idioma">
           <span data-lang="es" class="active">ES</span>
-          <span style="opacity:0.3;margin:0 2px;">|</span>
+          <span aria-hidden="true"> / </span>
           <span data-lang="en">EN</span>
+        </button>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav-links" data-i18n-aria-label="nav.menu" aria-label="Menú de navegación">
+          <span></span><span></span>
         </button>
       </div>
     </nav>
   </header>
 
-  <main>
+  <main id="contenido" tabindex="-1">
     <section class="hero" id="inicio">
       <div class="container hero-content">
         <p class="eyebrow" data-i18n="hero.eyebrow">Portfolio</p>
@@ -1281,6 +301,184 @@
       </div>
     </section>
 
+    <section id="portfolio">
+      <div class="container">
+        <div class="section-title">
+          <h2 data-i18n="portfolio.title">Portfolio</h2>
+          <p data-i18n="portfolio.desc">
+            Aquí se encuentran algunos de los proyectos de desarrollo de software, simulación física, motores gráficos y videojuegos en los que he trabajado.
+          </p>
+        </div>
+        <div class="portfolio-grid">
+
+          <article class="project-card" data-i18n-description="project.cosmicArchitect.desc" data-i18n-contributions="project.cosmicArchitect.contrib" data-description="Plugin de C++/Blueprints para Unreal Engine 5 (publicado en Fab), creado como trabajo de fin de grado en grupo de 3. Este permite generar sistemas planetarios proceduralmente, además implementa sistemas de LOD, colisiones, distribución automática de vegetación y un sistema que combina órbitas elípticas con simulación N-cuerpos."
+          data-contributions="Investigación, creación de requisitos funcionales, implementación de: estructura de módulos, sistema de LOD, actualización por fases, sistema de generación de ruido con patrón Strategy, materiales, oceano, simulación N-cuerpos, generador de texturas 3D, pruebas de rendimiento, página web. Cumplimiento de requisitos técnicos para publicar en Fab. ">
+            <div class="project-media">
+              <video class="project-video" muted loop playsinline preload="none" poster="assets/images/projects/CosmicArchitect.webp">
+                <source src="assets/videos/CosmicArchitect.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="project-body">
+              <h3 data-i18n="project.cosmicArchitect.title">Cosmic Architect</h3>
+              <p data-i18n="project.cosmicArchitect.short">Herramienta procedural interactiva desarrollada para Unreal Engine 5. Permite diseñar, generar y orbitar sistemas estelares enteros, planetas y cinturones de asteroides con alta fidelidad visual.</p>
+              <div class="project-links-row">
+                <a class="project-link" href="https://github.com/narratech/TFG-Bravo-Perez-Rubio" target="_blank" rel="noopener noreferrer" data-i18n="project.cosmicArchitect.link1">Ver en GitHub</a>
+                <a class="project-link" href="https://www.fab.com/listings/4e181e3f-0077-4ed6-8079-39e679ddfe24?tab=reviews" target="_blank" rel="noopener noreferrer" data-i18n="project.cosmicArchitect.link2">Ver en Fab</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" data-i18n-description="project.stringTyping.desc" data-i18n-contributions="project.stringTyping.contrib" data-description="Juego arcade de velocidad de escritura y reflejos creado para la ComJamOn2026. Desafía tu destreza tecleando con fluidez programas dinámicos para avanzar y aprobar las asignaturas de la carrera."
+          data-contributions="Diseño del juego e implementación de las distintas escenas y su comportamiento.">
+            <div class="project-media">
+              <video class="project-video" muted loop playsinline preload="none" poster="assets/images/projects/StringTyping.webp">
+                <source src="assets/videos/StringTyping.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="project-body">
+              <h3 data-i18n="project.stringTyping.title">String Typing</h3>
+              <p data-i18n="project.stringTyping.short">Juego arcade de velocidad de escritura y reflejos creado para la ComJamOn2026. Desafía tu destreza tecleando con fluidez programas dinámicos para avanzar y aprobar las asignaturas de la carrera.</p>
+              <div class="project-links-row">
+                <a class="project-link" href="https://github.com/DavidRubioMoreno/ComJamOn2026" target="_blank" rel="noopener noreferrer" data-i18n="project.stringTyping.link1">Ver en GitHub</a>
+                <a class="project-link" href="https://javi16333.itch.io/string-typing" target="_blank" rel="noopener noreferrer" data-i18n="project.stringTyping.link2">Visitar Itch.io</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" data-i18n-description="project.hEngine.desc" data-i18n-contributions="project.hEngine.contrib" data-description="Motor 3D creado en C++ y Lua usando Fmod, Ogre3D, SDL, PhysX e ImGUI, con arquitectura ECS. Proyecto en grupo de 10 personas. Se crearon además 2 juegos compatibles con el motor. Independientemente amplié el motor integrando ray tracing usando compute shaders(OpenGL), se gestionó tanto la subida a GPU de datos como buffers, texturas, mapas UV, materiales y entidades."
+          data-contributions="Selección de librerías, implementación del módulo de renderizado e input, implementación de la lógica del juego Nini-Strikers, implementación del renderizado por RayTracing.">
+            <div class="project-media">
+              <video class="project-video" muted loop playsinline preload="none" poster="assets/images/projects/Demo-H-Engine.webp">
+                <source src="assets/videos/Demo%20H-Engine.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="project-body">
+              <h3 data-i18n="project.hEngine.title">H-Engine</h3>
+              <p data-i18n="project.hEngine.short">Motor 3D de alto rendimiento desarrollado en C++ utilizando librerías actuales. El motor implementa renderizado, sonido, físicas y soporte para juegos propios.</p>
+              <div class="project-links-row">
+                <a class="project-link" href="https://github.com/DavidRubioMoreno" target="_blank" rel="noopener noreferrer" data-i18n="project.hEngine.link1">Ver en GitHub</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" data-i18n-description="project.military.desc" data-i18n-contributions="project.military.contrib" data-description="Proyecto en Unity desarrollado con las Meta Quest 2. Grupo de 3 integrantes."
+          data-contributions="Configuración del proyecto para compatibilidad con las gafas, creación de la escena, sistema de puntuación.">
+            <div class="project-media">
+              <video class="project-video" muted loop playsinline preload="none" poster="assets/images/projects/EntrenamientoMilitar.webp">
+                <source src="assets/videos/EntrenamientoMilitar.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="project-body">
+              <h3 data-i18n="project.military.title">Entrenamiento militar</h3>
+              <p data-i18n="project.military.short">Simulador VR, en el cúal experimentas un entrenamiento en una base militar. Deberás disparar y recargar manualmente para cumplir con el programa militar.</p>
+              <div class="project-links-row">
+                <a class="project-link" href="https://github.com/DavidRubioMoreno/EIRV_VR" target="_blank" rel="noopener noreferrer" data-i18n="project.military.link1">Ver en GitHub</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" data-i18n-description="project.endlessRedemption.desc" data-i18n-contributions="project.endlessRedemption.contrib" data-description="Videojuego de acción y rol en tercera persona desarrollado en Unity. Presenta mecánicas de combate pulidas, animaciones fluidas, un sistema dinámico de combos y progresión del personaje."
+          data-contributions="Creación de mapas, implementación del comportamiento de enemigos, jugador y power-ups.">
+            <div class="project-media">
+              <video class="project-video" muted loop playsinline preload="none" poster="assets/images/projects/EndlessRedemption.webp">
+                <source src="assets/videos/EndlessRedemption.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="project-body">
+              <h3 data-i18n="project.endlessRedemption.title">Endless Redemption</h3>
+              <p data-i18n="project.endlessRedemption.short">Videojuego de acción y rol en tercera persona desarrollado en Unity. Presenta mecánicas de combate pulidas, animaciones fluidas, un sistema dinámico de combos y progresión del personaje.</p>
+              <div class="project-links-row">
+                <a class="project-link" href="https://github.com/DavidRubioMoreno/EndlessRedemption" target="_blank" rel="noopener noreferrer" data-i18n="project.endlessRedemption.link1">Ver en GitHub</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" data-i18n-description="project.nightmareTales.desc" data-i18n-contributions="project.nightmareTales.contrib" data-description="Aventura inmersiva de misterio y puzles en primera persona creada para la Global Game Jam 2026, creada en Unity con un equipo de 4 personas."
+          data-contributions="Generación de salas, gestión de objetos y recolectables, intregración de partículas y loop del juego.">
+            <div class="project-media">
+              <video class="project-video" muted loop playsinline preload="none" poster="assets/images/projects/NightmareTales.webp">
+                <source src="assets/videos/NightmareTales.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="project-body">
+              <h3 data-i18n="project.nightmareTales.title">Nightmare Tales</h3>
+              <p data-i18n="project.nightmareTales.short">Aventura inmersiva de misterio y puzles en primera persona creada para la Global Game Jam 2026. Ofrece un diseño sonoro envolvente, una atmósfera tensa y generación procedimental de salas.</p>
+              <div class="project-links-row">
+                <a class="project-link" href="https://github.com/DavidRubioMoreno/GlobalGameJam_2026" target="_blank" rel="noopener noreferrer" data-i18n="project.nightmareTales.link1">Ver en GitHub</a>
+                <a class="project-link" href="https://globalgamejam.org/games/2026/juego-ninis-7" target="_blank" rel="noopener noreferrer" data-i18n="project.nightmareTales.link2">Página en GGJ</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" data-i18n-description="project.manin.desc" data-i18n-contributions="project.manin.contrib" data-description="Juego creado en grupo de 6 para la GlobalGameJam_2025. Esta desarrollado en Unity y Fmod."
+          data-contributions="Escenarios, integración de párticulas, generación de enemigos, cinemáticas, sonido.">
+            <div class="project-media">
+              <video class="project-video" muted loop playsinline preload="none" poster="assets/images/projects/ManinElLiderDelaBanda.webp">
+                <source src="assets/videos/ManinElLiderDelaBanda.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="project-body">
+              <h3 data-i18n="project.manin.title">Manín: El Líder de la Banda</h3>
+              <p data-i18n="project.manin.short">Juego RPG en tercera persona publicado en Itch.io (GlobalGameJam_2025). Controla a Manín durante su aventura para recoger las ramas sagradas y derrotar a sus enemigos.</p>
+              <div class="project-links-row">
+                <a class="project-link" href="https://github.com/DavidRubioMoreno/ComJamon2025-Sonido" target="_blank" rel="noopener noreferrer" data-i18n="project.manin.link1">Ver en GitHub</a>
+                <a class="project-link" href="https://crest646.itch.io/manin-el-lider-de-la-banda" target="_blank" rel="noopener noreferrer" data-i18n="project.manin.link2">Visitar Itch.io</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- <article class="project-card" data-i18n-description="project.hTowerDefense.desc" data-i18n-contributions="project.hTowerDefense.contrib" data-description="Juego creado sin motor gráfico usando la librería de C++ SDL con OpenGL, equipo de 10 personas. La implementación usa el modelo ECS."
+          data-contributions="Integración de animaciones, partículas, sistema de meteorología y lógica de las torres.">
+            <div class="project-media">
+              <video class="project-video" muted loop playsinline preload="metadata">
+                <source src="assets/videos/Trailer%20H-Defense.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="project-body">
+              <h3 data-i18n="project.hTowerDefense.title">H-TowerDefense</h3>
+              <p data-i18n="project.hTowerDefense.short">Juego estilo Tower Defense en 2.5 con oleadas dinámicas de enemigos. Este ofrece un sistema de progresión con compra, distintos niveles con decenas de oleadas y enemigos variados.</p>
+              <div class="project-links-row">
+                <a class="project-link" href="https://github.com/DavidRubioMoreno/HTowerDefense" target="_blank" rel="noopener noreferrer" data-i18n="project.hTowerDefense.link1">Ver en GitHub</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" data-i18n-description="project.bridgeIt.desc" data-i18n-contributions="project.bridgeIt.contrib" data-description="Proyecto en C++ usando PhysX para implementar sistemas de partículas, muelles, flotación e intregración propia, posteriormente creando una demo técnica."
+          data-contributions="Proyecto individual.">
+            <div class="project-media">
+              <video class="project-video" muted loop playsinline preload="metadata">
+                <source src="assets/videos/BridgeIt.mkv" type="video/x-matroska">
+              </video>
+            </div>
+            <div class="project-body">
+              <h3 data-i18n="project.bridgeIt.title">Bridge It</h3>
+              <p data-i18n="project.bridgeIt.short">Simulador estructural interactivo centrado en la ingeniería física de puentes. Crea una estructura que permita cruzarse de forma continua y sin derrumbes.</p>
+              <div class="project-links-row">
+                <a class="project-link" href="https://github.com/DavidRubioMoreno/SimulacionFisicaVideojuegos" target="_blank" rel="noopener noreferrer" data-i18n="project.bridgeIt.link1">Ver en GitHub</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" data-i18n-description="project.theSimulation.desc" data-i18n-contributions="project.theSimulation.contrib" data-description="Juego y entorno interactivo en Itch.io. Experimenta con las distintas armas que ofrece la simulación e interactua espacialmente con el entorno para completar los puzzles."
+          data-contributions="Proyecto individual.">
+            <div class="project-media">
+              <video class="project-video" muted loop playsinline preload="metadata">
+                <source src="assets/videos/TheSimulation.mkv" type="video/x-matroska">
+              </video>
+            </div>
+            <div class="project-body">
+              <h3 data-i18n="project.theSimulation.title">The Simulation</h3>
+              <p data-i18n="project.theSimulation.short">Juego y entorno interactivo en Itch.io. Experimenta con las distintas armas que ofrece la simulación e interactua espacialmente con el entorno para completar los puzzles.</p>
+              <div class="project-links-row">
+                <a class="project-link" href="https://github.com/DavidRubioMoreno/EIRVProyectoFinal" target="_blank" rel="noopener noreferrer" data-i18n="project.theSimulation.link1">Ver en GitHub</a>
+                <a class="project-link" href="https://davidrubiomoreno.itch.io/thesimulation" target="_blank" rel="noopener noreferrer" data-i18n="project.theSimulation.link2">Visitar Itch.io</a>
+              </div>
+            </div>
+          </article> -->
+        </div>
+      </div>
+    </section>
+
     <section id="sobre-mi">
       <div class="container">
         <div class="section-title">
@@ -1292,8 +490,8 @@
             <p data-i18n="about.p1">
               Soy David Rubio Moreno, estudiante de Desarrollo de Videojuegos en la Universidad Complutense de Madrid. Busco comenzar mi carrera profesional ampliando conocimientos en frameworks, desarrollo software y automatización.
             </p>
-            <p data-i18n="about.p2">
-            <p data-i18n="about.p3">
+            <p data-i18n="about.p2">Me interesa especialmente la programación en C++, el desarrollo de motores y herramientas, la eficiencia de aplicaciones, la simulación y la investigación de nuevas ideas. También trabajo con Unity y Unreal Engine, desarrollo multiplataforma y modelos de inteligencia artificial aplicados al gameplay y al análisis de datos.</p>
+            <p data-i18n="about.p3">He participado en entornos colaborativos creando motores para PC, Android y consolas, y he publicado un plugin propio de Unreal Engine en Fab. Además, participo en game jams para poner a prueba mi agilidad, creatividad y resolución de problemas bajo presión.</p>
           </article>
           <aside class="panel">
             <h3 data-i18n="about.cvTitle">CV</h3>
@@ -1302,36 +500,9 @@
             </ul>
             <div class="cv-actions">
               <button class="button" type="button" id="open-cv-preview" data-i18n="about.cvView">Ver CV</button>
-              <a class="button secondary" href="assets/information/cv/David_Rubio_cv.pdf" target="_blank" rel="noopener noreferrer" aria-label="Descargar CV en PDF" data-i18n="about.cvDownload">Descargar CV</a>
+              <a class="button secondary" href="assets/information/cv/David_Rubio_cv.pdf" download="David_Rubio_cv.pdf" target="_blank" rel="noopener noreferrer" aria-label="Descargar CV en PDF" data-i18n="about.cvDownload">Descargar CV</a>
             </div>
           </aside>
-        </div>
-      </div>
-    </section>
-
-    <section id="contribuciones">
-      <div class="container">
-        <div class="section-title">
-          <h2 data-i18n="contributions.title">Contribuciones en GitHub</h2>
-          <p data-i18n="contributions.desc">
-            Mapa anual de actividad en mis repositorios publicos de GitHub.
-          </p>
-        </div>
-        <div class="panel contributions-panel">
-          <div class="contribution-years" data-i18n-aria-label="contributions.yearSelect" aria-label="Seleccionar ano de contribuciones"></div>
-          <div class="contribution-summary" aria-live="polite">Cargando contribuciones...</div>
-          <div class="calendar-wrapper">
-            <div class="calendar" data-i18n-aria-label="contributions.calendar" aria-label="Mapa de contribuciones por dia"></div>
-          </div>
-          <div class="contribution-legend" aria-hidden="true">
-            <span data-i18n="contributions.less">Menos</span>
-            <span class="contribution-day" data-level="0"></span>
-            <span class="contribution-day" data-level="1"></span>
-            <span class="contribution-day" data-level="2"></span>
-            <span class="contribution-day" data-level="3"></span>
-            <span class="contribution-day" data-level="4"></span>
-            <span data-i18n="contributions.more">M&aacute;s</span>
-          </div>
         </div>
       </div>
     </section>
@@ -1344,68 +515,39 @@
             Algunas de las tecnologias y herramientas que usado durante mi trayectoria
           </p>
         </div>
-        <div class="skills-carousel" aria-label="Carrusel de tecnologias">
+        <div class="skills-carousel" tabindex="0" role="region" data-i18n-aria-label="skills.carousel" aria-label="Carrusel de tecnologías">
           <div class="skills-track">
-            <div class="skill-item"><img src="assets/icons/anaconda.webp" alt="Anaconda"></div>
-            <div class="skill-item"><img src="assets/icons/android.webp" alt="Android"></div>
-            <div class="skill-item"><img src="assets/icons/blender.webp" alt="Blender"></div>
-            <div class="skill-item"><img src="assets/icons/c.webp" alt="C"></div>
-            <div class="skill-item"><img src="assets/icons/cmake.webp" alt="CMake"></div>
-            <div class="skill-item"><img src="assets/icons/cpp.webp" alt="C++"></div>
-            <div class="skill-item"><img src="assets/icons/csharp.webp" alt="C#"></div>
-            <div class="skill-item"><img src="assets/icons/fmod.webp" alt="FMOD"></div>
-            <div class="skill-item"><img src="assets/icons/git.webp" alt="Git"></div>
-            <div class="skill-item"><img src="assets/icons/github.webp" alt="GitHub"></div>
-            <div class="skill-item"><img src="assets/icons/github-b.webp" alt="GitHub"></div>
-            <div class="skill-item"><img src="assets/icons/java.webp" alt="Java"></div>
-            <div class="skill-item"><img src="assets/icons/javascript.webp" alt="JavaScript"></div>
-            <div class="skill-item"><img src="assets/icons/jupyter.webp" alt="Jupyter"></div>
-            <div class="skill-item"><img src="assets/icons/linkedin.webp" alt="LinkedIn"></div>
-            <div class="skill-item"><img src="assets/icons/mail.webp" alt="Email"></div>
-            <div class="skill-item"><img src="assets/icons/node.webp" alt="Node.js"></div>
-            <div class="skill-item"><img src="assets/icons/numpy.webp" alt="NumPy"></div>
-            <div class="skill-item"><img src="assets/icons/ogre.webp" alt="OGRE"></div>
-            <div class="skill-item"><img src="assets/icons/opengl.webp" alt="OpenGL"></div>
-            <div class="skill-item"><img src="assets/icons/pandas.webp" alt="Pandas"></div>
-            <div class="skill-item"><img src="assets/icons/phaser.webp" alt="Phaser"></div>
-            <div class="skill-item"><img src="assets/icons/physx.webp" alt="PhysX"></div>
-            <div class="skill-item"><img src="assets/icons/python.webp" alt="Python"></div>
-            <div class="skill-item"><img src="assets/icons/sdl.webp" alt="SDL"></div>
-            <div class="skill-item"><img src="assets/icons/unity.webp" alt="Unity"></div>
-            <div class="skill-item"><img src="assets/icons/unreal.webp" alt="Unreal Engine"></div>
-            <div class="skill-item"><img src="assets/icons/virtualbox.webp" alt="VirtualBox"></div>
-            <div class="skill-item"><img src="assets/icons/visual.webp" alt="Visual Studio"></div>
-            <div class="skill-item"><img src="assets/icons/visualcode.webp" alt="Visual Studio Code"></div>
-            <div class="skill-item"><img src="assets/icons/anaconda.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/android.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/blender.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/c.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/cmake.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/cpp.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/csharp.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/fmod.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/git.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/github.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/github-b.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/java.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/javascript.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/jupyter.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/linkedin.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/mail.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/node.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/numpy.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/ogre.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/opengl.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/pandas.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/phaser.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/physx.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/python.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/sdl.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/unity.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/unreal.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/virtualbox.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/visual.webp" alt="" aria-hidden="true"></div>
-            <div class="skill-item"><img src="assets/icons/visualcode.webp" alt="" aria-hidden="true"></div>
+            <div class="skill-item"><img src="assets/icons/anaconda.webp" alt="" loading="lazy" width="46" height="46"><span>Anaconda</span></div>
+            <div class="skill-item"><img src="assets/icons/android.webp" alt="" loading="lazy" width="46" height="46"><span>Android</span></div>
+            <div class="skill-item"><img src="assets/icons/blender.webp" alt="" loading="lazy" width="46" height="46"><span>Blender</span></div>
+            <div class="skill-item"><img src="assets/icons/c.webp" alt="" loading="lazy" width="46" height="46"><span>C</span></div>
+            <div class="skill-item"><img src="assets/icons/cmake.webp" alt="" loading="lazy" width="46" height="46"><span>CMake</span></div>
+            <div class="skill-item"><img src="assets/icons/cpp.webp" alt="" loading="lazy" width="46" height="46"><span>C++</span></div>
+            <div class="skill-item"><img src="assets/icons/csharp.webp" alt="" loading="lazy" width="46" height="46"><span>C#</span></div>
+            <div class="skill-item"><img src="assets/icons/fmod.webp" alt="" loading="lazy" width="46" height="46"><span>FMOD</span></div>
+            <div class="skill-item"><img src="assets/icons/git.webp" alt="" loading="lazy" width="46" height="46"><span>Git</span></div>
+            <div class="skill-item"><img src="assets/icons/github.webp" alt="" loading="lazy" width="46" height="46"><span>GitHub</span></div>
+            <div class="skill-item"><img src="assets/icons/github-b.webp" alt="" loading="lazy" width="46" height="46"><span>GitHub</span></div>
+            <div class="skill-item"><img src="assets/icons/java.webp" alt="" loading="lazy" width="46" height="46"><span>Java</span></div>
+            <div class="skill-item"><img src="assets/icons/javascript.webp" alt="" loading="lazy" width="46" height="46"><span>JavaScript</span></div>
+            <div class="skill-item"><img src="assets/icons/jupyter.webp" alt="" loading="lazy" width="46" height="46"><span>Jupyter</span></div>
+            <div class="skill-item"><img src="assets/icons/linkedin.webp" alt="" loading="lazy" width="46" height="46"><span>LinkedIn</span></div>
+            <div class="skill-item"><img src="assets/icons/mail.webp" alt="" loading="lazy" width="46" height="46"><span>Email</span></div>
+            <div class="skill-item"><img src="assets/icons/node.webp" alt="" loading="lazy" width="46" height="46"><span>Node.js</span></div>
+            <div class="skill-item"><img src="assets/icons/numpy.webp" alt="" loading="lazy" width="46" height="46"><span>NumPy</span></div>
+            <div class="skill-item"><img src="assets/icons/ogre.webp" alt="" loading="lazy" width="46" height="46"><span>OGRE</span></div>
+            <div class="skill-item"><img src="assets/icons/opengl.webp" alt="" loading="lazy" width="46" height="46"><span>OpenGL</span></div>
+            <div class="skill-item"><img src="assets/icons/pandas.webp" alt="" loading="lazy" width="46" height="46"><span>Pandas</span></div>
+            <div class="skill-item"><img src="assets/icons/phaser.webp" alt="" loading="lazy" width="46" height="46"><span>Phaser</span></div>
+            <div class="skill-item"><img src="assets/icons/physx.webp" alt="" loading="lazy" width="46" height="46"><span>PhysX</span></div>
+            <div class="skill-item"><img src="assets/icons/python.webp" alt="" loading="lazy" width="46" height="46"><span>Python</span></div>
+            <div class="skill-item"><img src="assets/icons/sdl.webp" alt="" loading="lazy" width="46" height="46"><span>SDL</span></div>
+            <div class="skill-item"><img src="assets/icons/unity.webp" alt="" loading="lazy" width="46" height="46"><span>Unity</span></div>
+            <div class="skill-item"><img src="assets/icons/unreal.webp" alt="" loading="lazy" width="46" height="46"><span>Unreal Engine</span></div>
+            <div class="skill-item"><img src="assets/icons/virtualbox.webp" alt="" loading="lazy" width="46" height="46"><span>VirtualBox</span></div>
+            <div class="skill-item"><img src="assets/icons/visual.webp" alt="" loading="lazy" width="46" height="46"><span>Visual Studio</span></div>
+            <div class="skill-item"><img src="assets/icons/visualcode.webp" alt="" loading="lazy" width="46" height="46"><span>Visual Studio Code</span></div>
+
           </div>
         </div>
         <div class="soft-skills-grid">
@@ -1431,189 +573,34 @@
           <div class="soft-skill-card" data-i18n="skills.crossplat">Desarrollo multiplataforma</div>
           <div class="soft-skill-card" data-i18n="skills.agenticProg">Programación agéntica</div>
           <div class="soft-skill-card" data-i18n="skills.aiApplied">IA aplicada</div>
-          
+
         </div>
       </div>
     </section>
 
-    <section id="portfolio">
+    <section id="contribuciones">
       <div class="container">
         <div class="section-title">
-          <h2 data-i18n="portfolio.title">Portfolio</h2>
-          <p data-i18n="portfolio.desc">
-            Aquí se encuentran algunos de los proyectos de desarrollo de software, simulación física, motores gráficos y videojuegos en los que he trabajado.
+          <h2 data-i18n="contributions.title">Contribuciones en GitHub</h2>
+          <p data-i18n="contributions.desc">
+            Mapa anual de actividad en mis repositorios publicos de GitHub.
           </p>
         </div>
-        <div class="portfolio-grid">
-
-          <article class="project-card" data-i18n-description="project.cosmicArchitect.desc" data-i18n-contributions="project.cosmicArchitect.contrib" data-description="Plugin de C++/Blueprints para Unreal Engine 5 (publicado en Fab), creado como trabajo de fin de grado en grupo de 3. Este permite generar sistemas planetarios proceduralmente, además implementa sistemas de LOD, colisiones, distribución automática de vegetación y un sistema que combina órbitas elípticas con simulación N-cuerpos." 
-          data-contributions="Investigación, creación de requisitos funcionales, implementación de: estructura de módulos, sistema de LOD, actualización por fases, sistema de generación de ruido con patrón Strategy, materiales, oceano, simulación N-cuerpos, generador de texturas 3D, pruebas de rendimiento, página web. Cumplimiento de requisitos técnicos para publicar en Fab. ">
-            <div class="project-media">
-              <video class="project-video" muted loop playsinline preload="metadata">
-                <source src="assets/videos/CosmicArchitect.mp4" type="video/mp4">
-              </video>
-            </div>
-            <div class="project-body">
-              <h3 data-i18n="project.cosmicArchitect.title">Cosmic Architect</h3>
-              <p data-i18n="project.cosmicArchitect.short">Herramienta procedural interactiva desarrollada para Unreal Engine 5. Permite diseñar, generar y orbitar sistemas estelares enteros, planetas y cinturones de asteroides con alta fidelidad visual.</p>
-              <div class="project-links-row">
-                <a class="project-link" href="https://github.com/narratech/TFG-Bravo-Perez-Rubio" target="_blank" rel="noopener noreferrer" data-i18n="project.cosmicArchitect.link1">Ver en GitHub</a>
-                <a class="project-link" href="https://www.fab.com/listings/4e181e3f-0077-4ed6-8079-39e679ddfe24?tab=reviews" target="_blank" rel="noopener noreferrer" data-i18n="project.cosmicArchitect.link2">Ver en Fab</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card" data-i18n-description="project.stringTyping.desc" data-i18n-contributions="project.stringTyping.contrib" data-description="Juego arcade de velocidad de escritura y reflejos creado para la ComJamOn2026. Desafía tu destreza tecleando con fluidez programas dinámicos para avanzar y aprobar las asignaturas de la carrera." 
-          data-contributions="Diseño del juego e implementación de las distintas escenas y su comportamiento.">
-            <div class="project-media">
-              <video class="project-video" muted loop playsinline preload="metadata">
-                <source src="assets/videos/StringTyping.mkv" type="video/x-matroska">
-              </video>
-            </div>
-            <div class="project-body">
-              <h3 data-i18n="project.stringTyping.title">String Typing</h3>
-              <p data-i18n="project.stringTyping.short">Juego arcade de velocidad de escritura y reflejos creado para la ComJamOn2026. Desafía tu destreza tecleando con fluidez programas dinámicos para avanzar y aprobar las asignaturas de la carrera.</p>
-              <div class="project-links-row">
-                <a class="project-link" href="https://github.com/DavidRubioMoreno/ComJamOn2026" target="_blank" rel="noopener noreferrer" data-i18n="project.stringTyping.link1">Ver en GitHub</a>
-                <a class="project-link" href="https://javi16333.itch.io/string-typing" target="_blank" rel="noopener noreferrer" data-i18n="project.stringTyping.link2">Visitar Itch.io</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card" data-i18n-description="project.hEngine.desc" data-i18n-contributions="project.hEngine.contrib" data-description="Motor 3D creado en C++ y Lua usando Fmod, Ogre3D, SDL, PhysX e ImGUI, con arquitectura ECS. Proyecto en grupo de 10 personas. Se crearon además 2 juegos compatibles con el motor. Independientemente amplié el motor integrando ray tracing usando compute shaders(OpenGL), se gestionó tanto la subida a GPU de datos como buffers, texturas, mapas UV, materiales y entidades." 
-          data-contributions="Selección de librerías, implementación del módulo de renderizado e input, implementación de la lógica del juego Nini-Strikers, implementación del renderizado por RayTracing.">
-            <div class="project-media">
-              <video class="project-video" muted loop playsinline preload="metadata">
-                <source src="assets/videos/Demo%20H-Engine.mp4" type="video/mp4">
-              </video>
-            </div>
-            <div class="project-body">
-              <h3 data-i18n="project.hEngine.title">H-Engine</h3>
-              <p data-i18n="project.hEngine.short">Motor 3D de alto rendimiento desarrollado en C++ utilizando librerías actuales. El motor implementa renderizado, sonido, físicas y soporte para juegos propios.</p>
-              <div class="project-links-row">
-                <a class="project-link" href="https://github.com/DavidRubioMoreno" target="_blank" rel="noopener noreferrer" data-i18n="project.hEngine.link1">Ver en GitHub</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card" data-i18n-description="project.military.desc" data-i18n-contributions="project.military.contrib" data-description="Proyecto en Unity desarrollado con las Meta Quest 2. Grupo de 3 integrantes." 
-          data-contributions="Configuración del proyecto para compatibilidad con las gafas, creación de la escena, sistema de puntuación.">
-            <div class="project-media">
-              <video class="project-video" muted loop playsinline preload="metadata">
-                <source src="assets/videos/EntrenamientoMilitar.mp4" type="video/x-matroska">
-              </video>
-            </div>
-            <div class="project-body">
-              <h3 data-i18n="project.military.title">Entrenamiento militar</h3>
-              <p data-i18n="project.military.short">Simulador VR, en el cúal experimentas un entrenamiento en una base militar. Deberás disparar y recargar manualmente para cumplir con el programa militar.</p>
-              <div class="project-links-row">
-                <a class="project-link" href="https://github.com/DavidRubioMoreno/EIRV_VR" target="_blank" rel="noopener noreferrer" data-i18n="project.military.link1">Ver en GitHub</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card" data-i18n-description="project.endlessRedemption.desc" data-i18n-contributions="project.endlessRedemption.contrib" data-description="Videojuego de acción y rol en tercera persona desarrollado en Unity. Presenta mecánicas de combate pulidas, animaciones fluidas, un sistema dinámico de combos y progresión del personaje." 
-          data-contributions="Creación de mapas, implementación del comportamiento de enemigos, jugador y power-ups.">
-            <div class="project-media">
-              <video class="project-video" muted loop playsinline preload="metadata">
-                <source src="assets/videos/EndlessRedemption.mkv" type="video/x-matroska">
-              </video>
-            </div>
-            <div class="project-body">
-              <h3 data-i18n="project.endlessRedemption.title">Endless Redemption</h3>
-              <p data-i18n="project.endlessRedemption.short">Videojuego de acción y rol en tercera persona desarrollado en Unity. Presenta mecánicas de combate pulidas, animaciones fluidas, un sistema dinámico de combos y progresión del personaje.</p>
-              <div class="project-links-row">
-                <a class="project-link" href="https://github.com/DavidRubioMoreno/EndlessRedemption" target="_blank" rel="noopener noreferrer" data-i18n="project.endlessRedemption.link1">Ver en GitHub</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card" data-i18n-description="project.nightmareTales.desc" data-i18n-contributions="project.nightmareTales.contrib" data-description="Aventura inmersiva de misterio y puzles en primera persona creada para la Global Game Jam 2026, creada en Unity con un equipo de 4 personas." 
-          data-contributions="Generación de salas, gestión de objetos y recolectables, intregración de partículas y loop del juego.">
-            <div class="project-media">
-              <video class="project-video" muted loop playsinline preload="metadata">
-                <source src="assets/videos/NightmareTales.mkv" type="video/x-matroska">
-              </video>
-            </div>
-            <div class="project-body">
-              <h3 data-i18n="project.nightmareTales.title">Nightmare Tales</h3>
-              <p data-i18n="project.nightmareTales.short">Aventura inmersiva de misterio y puzles en primera persona creada para la Global Game Jam 2026. Ofrece un diseño sonoro envolvente, una atmósfera tensa y generación procedimental de salas.</p>
-              <div class="project-links-row">
-                <a class="project-link" href="https://github.com/DavidRubioMoreno/GlobalGameJam_2026" target="_blank" rel="noopener noreferrer" data-i18n="project.nightmareTales.link1">Ver en GitHub</a>
-                <a class="project-link" href="https://globalgamejam.org/games/2026/juego-ninis-7" target="_blank" rel="noopener noreferrer" data-i18n="project.nightmareTales.link2">Página en GGJ</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card" data-i18n-description="project.manin.desc" data-i18n-contributions="project.manin.contrib" data-description="Juego creado en grupo de 6 para la GlobalGameJam_2025. Esta desarrollado en Unity y Fmod." 
-          data-contributions="Escenarios, integración de párticulas, generación de enemigos, cinemáticas, sonido.">
-            <div class="project-media">
-              <video class="project-video" muted loop playsinline preload="metadata">
-                <source src="assets/videos/ManinElLiderDelaBanda.mp4" type="video/mp4">
-              </video>
-            </div>
-            <div class="project-body">
-              <h3 data-i18n="project.manin.title">Manín: El Líder de la Banda</h3>
-              <p data-i18n="project.manin.short">Juego RPG en tercera persona publicado en Itch.io (GlobalGameJam_2025). Controla a Manín durante su aventura para recoger las ramas sagradas y derrotar a sus enemigos.</p>
-              <div class="project-links-row">
-                <a class="project-link" href="https://github.com/DavidRubioMoreno/ComJamon2025-Sonido" target="_blank" rel="noopener noreferrer" data-i18n="project.manin.link1">Ver en GitHub</a>
-                <a class="project-link" href="https://crest646.itch.io/manin-el-lider-de-la-banda" target="_blank" rel="noopener noreferrer" data-i18n="project.manin.link2">Visitar Itch.io</a>
-              </div>
-            </div>
-          </article>
-
-          
-
-          <!-- <article class="project-card" data-i18n-description="project.hTowerDefense.desc" data-i18n-contributions="project.hTowerDefense.contrib" data-description="Juego creado sin motor gráfico usando la librería de C++ SDL con OpenGL, equipo de 10 personas. La implementación usa el modelo ECS." 
-          data-contributions="Integración de animaciones, partículas, sistema de meteorología y lógica de las torres.">
-            <div class="project-media">
-              <video class="project-video" muted loop playsinline preload="metadata">
-                <source src="assets/videos/Trailer%20H-Defense.mp4" type="video/mp4">
-              </video>
-            </div>
-            <div class="project-body">
-              <h3 data-i18n="project.hTowerDefense.title">H-TowerDefense</h3>
-              <p data-i18n="project.hTowerDefense.short">Juego estilo Tower Defense en 2.5 con oleadas dinámicas de enemigos. Este ofrece un sistema de progresión con compra, distintos niveles con decenas de oleadas y enemigos variados.</p>
-              <div class="project-links-row">
-                <a class="project-link" href="https://github.com/DavidRubioMoreno/HTowerDefense" target="_blank" rel="noopener noreferrer" data-i18n="project.hTowerDefense.link1">Ver en GitHub</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="project-card" data-i18n-description="project.bridgeIt.desc" data-i18n-contributions="project.bridgeIt.contrib" data-description="Proyecto en C++ usando PhysX para implementar sistemas de partículas, muelles, flotación e intregración propia, posteriormente creando una demo técnica." 
-          data-contributions="Proyecto individual.">
-            <div class="project-media">
-              <video class="project-video" muted loop playsinline preload="metadata">
-                <source src="assets/videos/BridgeIt.mkv" type="video/x-matroska">
-              </video>
-            </div>
-            <div class="project-body">
-              <h3 data-i18n="project.bridgeIt.title">Bridge It</h3>
-              <p data-i18n="project.bridgeIt.short">Simulador estructural interactivo centrado en la ingeniería física de puentes. Crea una estructura que permita cruzarse de forma continua y sin derrumbes.</p>
-              <div class="project-links-row">
-                <a class="project-link" href="https://github.com/DavidRubioMoreno/SimulacionFisicaVideojuegos" target="_blank" rel="noopener noreferrer" data-i18n="project.bridgeIt.link1">Ver en GitHub</a>
-              </div>
-            </div>
-          </article>
-
-          
-
-          <article class="project-card" data-i18n-description="project.theSimulation.desc" data-i18n-contributions="project.theSimulation.contrib" data-description="Juego y entorno interactivo en Itch.io. Experimenta con las distintas armas que ofrece la simulación e interactua espacialmente con el entorno para completar los puzzles." 
-          data-contributions="Proyecto individual.">
-            <div class="project-media">
-              <video class="project-video" muted loop playsinline preload="metadata">
-                <source src="assets/videos/TheSimulation.mkv" type="video/x-matroska">
-              </video>
-            </div>
-            <div class="project-body">
-              <h3 data-i18n="project.theSimulation.title">The Simulation</h3>
-              <p data-i18n="project.theSimulation.short">Juego y entorno interactivo en Itch.io. Experimenta con las distintas armas que ofrece la simulación e interactua espacialmente con el entorno para completar los puzzles.</p>
-              <div class="project-links-row">
-                <a class="project-link" href="https://github.com/DavidRubioMoreno/EIRVProyectoFinal" target="_blank" rel="noopener noreferrer" data-i18n="project.theSimulation.link1">Ver en GitHub</a>                
-                <a class="project-link" href="https://davidrubiomoreno.itch.io/thesimulation" target="_blank" rel="noopener noreferrer" data-i18n="project.theSimulation.link2">Visitar Itch.io</a>
-              </div>
-            </div>
-          </article> -->
+        <div class="panel contributions-panel">
+          <div class="contribution-years" data-i18n-aria-label="contributions.yearSelect" aria-label="Seleccionar ano de contribuciones"></div>
+          <div class="contribution-summary" aria-live="polite">Cargando contribuciones...</div>
+          <div class="calendar-wrapper" tabindex="0" role="region" data-i18n-aria-label="contributions.calendar" aria-label="Mapa de contribuciones por día">
+            <div class="calendar" data-i18n-aria-label="contributions.calendar" aria-label="Mapa de contribuciones por dia"></div>
+          </div>
+          <div class="contribution-legend" aria-hidden="true">
+            <span data-i18n="contributions.less">Menos</span>
+            <span class="contribution-day" data-level="0"></span>
+            <span class="contribution-day" data-level="1"></span>
+            <span class="contribution-day" data-level="2"></span>
+            <span class="contribution-day" data-level="3"></span>
+            <span class="contribution-day" data-level="4"></span>
+            <span data-i18n="contributions.more">M&aacute;s</span>
+          </div>
         </div>
       </div>
     </section>
@@ -1641,12 +628,14 @@
       <span style="margin-left: 16px; opacity: 0.5;" data-i18n="footer.tag">build.v1.1</span>
     </div>
   </footer>
-  <script src="scripts/translations.js"></script>
-  <script src="scripts/hero-particles.js"></script>
-  <script src="scripts/carousel.js"></script>
-  <script src="scripts/project-videos.js"></script>
-  <script src="scripts/project-modal.js"></script>
-  <script src="scripts/cv-preview.js"></script>
+  <script src="scripts/translations.js?v=20260905-3"></script>
+  <script src="scripts/hero-particles.js?v=20260905-2"></script>
+  <script src="scripts/carousel.js?v=20260905-2"></script>
+  <script src="scripts/navigation.js?v=20260905-2"></script>
+  <script src="scripts/dialog.js?v=20260905-2"></script>
+  <script src="scripts/project-videos.js?v=20260905-2"></script>
+  <script src="scripts/project-modal.js?v=20260905-3"></script>
+  <script src="scripts/cv-preview.js?v=20260905-2"></script>
   <script>
     const contributionCalendar = document.querySelector(".calendar");
     const contributionSummary = document.querySelector(".contribution-summary");
@@ -1657,11 +646,19 @@
     const currentYear = new Date().getFullYear();
     const availableYears = Array.from({ length: currentYear - 2023 + 1 }, (_, index) => currentYear - index);
     let activeContributionYear = currentYear;
+    let contributionRequest = 0;
 
     function renderContributionYears() {
       if (!contributionYears) return;
 
-      contributionYears.innerHTML = "";
+      if (contributionYears.children.length) {
+        contributionYears.querySelectorAll('button').forEach(button => {
+          const active = Number(button.textContent) === activeContributionYear;
+          button.classList.toggle('active', active);
+          button.setAttribute('aria-pressed', String(active));
+        });
+        return;
+      }
       availableYears.forEach((year) => {
         const button = document.createElement("button");
         button.type = "button";
@@ -1682,13 +679,16 @@
       contributionCalendar.innerHTML = "";
 
       const contributions = data.contributions || [];
-      if (contributions.length === 0) return;
+      if (contributions.length === 0) {
+        contributionSummary.textContent = t("contributions.summary", { total: data.total?.[year] || 0, year });
+        return;
+      }
 
       const firstDate = new Date(`${contributions[0].date}T00:00:00`);
       const initialOffset = firstDate.getDay();
 
       // --- Month labels ---
-      const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+      const monthNames = Array.from({ length: 12 }, (_, month) => new Intl.DateTimeFormat(document.documentElement.lang, { month: "short" }).format(new Date(year, month, 1)));
       const daysToMonth = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
       const isLeap = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
       const d2m = [...daysToMonth];
@@ -1710,7 +710,7 @@
       });
 
       // --- Weekday labels (Mon, Wed, Fri) ---
-      const weekdays = ["Mon", "Wed", "Fri"];
+      const weekdays = document.documentElement.lang === "es" ? ["Lun", "Mié", "Vie"] : ["Mon", "Wed", "Fri"];
       weekdays.forEach((name, i) => {
         const row = 3 + i * 2;
         const el = document.createElement("span");
@@ -1756,6 +756,7 @@
     function loadGithubContributions(year = activeContributionYear, forceRefresh = false) {
       if (!contributionCalendar || !contributionSummary) return;
 
+      const request = ++contributionRequest;
       const cached = contributionCache.get(year);
       if (!forceRefresh && cached && Date.now() - cached.loadedAt < contributionCacheTime) {
         renderContributionCalendar(year, cached.data);
@@ -1773,13 +774,14 @@
         })
         .then((data) => {
           contributionCache.set(year, { data, loadedAt: Date.now() });
-          renderContributionCalendar(year, data);
+          if (request === contributionRequest) renderContributionCalendar(year, data);
         })
         .catch(() => {
-          contributionSummary.textContent = t("contributions.error");
+          if (request === contributionRequest) contributionSummary.textContent = t("contributions.error");
         });
     }
 
+    document.addEventListener("languagechange", () => loadGithubContributions(activeContributionYear));
     renderContributionYears();
     loadGithubContributions();
     window.setInterval(() => loadGithubContributions(activeContributionYear, true), contributionCacheTime);

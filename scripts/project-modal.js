@@ -20,14 +20,17 @@ modal.innerHTML = `
   <div class="project-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
     <div class="project-modal-header">
       <h2 id="project-modal-title"></h2>
-      <button class="project-modal-close" type="button" aria-label="Cerrar detalles">x</button>
+      <button class="project-modal-close" type="button" data-i18n-aria-label="modal.close" aria-label="${t('modal.close')}">×</button>
     </div>
     <div class="project-modal-content">
-      <div class="project-modal-media"></div>
+      <div class="project-modal-visual">
+        <div class="project-modal-media"></div>
+        <button class="project-action project-video-alternative" type="button" hidden data-i18n="modal.localVideo">${t('modal.localVideo')}</button>
+      </div>
       <div class="project-modal-info">
         <p class="project-modal-description"></p>
         <div class="project-modal-contributions">
-          <h4>Contribuciones</h4>
+          <h4 data-i18n="modal.contributions">${t('modal.contributions')}</h4>
           <p class="project-modal-contributions-text"></p>
         </div>
         <div class="project-modal-links"></div>
@@ -42,7 +45,12 @@ const modalMedia = modal.querySelector(".project-modal-media");
 const modalDescription = modal.querySelector(".project-modal-description");
 const modalContributions = modal.querySelector(".project-modal-contributions-text");
 const modalLinks = modal.querySelector(".project-modal-links");
-const modalClose = modal.querySelector(".project-modal-close");
+const localVideoButton = modal.querySelector(".project-video-alternative");
+const projectDialog = setupPortfolioDialog(modal, () => {
+  modalMedia.innerHTML = "";
+  localVideoButton.hidden = true;
+  localVideoButton.onclick = null;
+});
 
 function createLink(label, href) {
   const link = document.createElement("a");
@@ -60,32 +68,55 @@ function getProjectLinks(card, title) {
   }));
 
   const extraLinks = projectDetails[title] ? projectDetails[title].links : [];
-  return links.concat(extraLinks.filter((extra) => !links.some((link) => link.href === extra.href)));
+  return links.concat(extraLinks.map(link => ({ ...link, label: t("modal.trailer") })).filter((extra) => !links.some((link) => link.href === extra.href)));
 }
 
 function renderProjectMedia(card, title) {
   modalMedia.innerHTML = "";
+  localVideoButton.hidden = true;
+  localVideoButton.onclick = null;
   const details = projectDetails[title];
   const localSource = card.querySelector(".project-video source");
   const placeholder = card.querySelector(".project-media-placeholder");
 
-  if (details && details.youtube) {
-    const iframe = document.createElement("iframe");
-    iframe.src = `${details.youtube}?rel=0`;
-    iframe.title = `Trailer de ${title}`;
-    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-    iframe.allowFullscreen = true;
-    modalMedia.appendChild(iframe);
-    return;
-  }
-
-  if (localSource) {
+  function renderLocalVideo() {
     const video = document.createElement("video");
     video.controls = true;
     video.playsInline = true;
     video.preload = "metadata";
-    video.innerHTML = `<source src="${localSource.getAttribute("src")}" type="${localSource.getAttribute("type") || "video/mp4"}">`;
-    modalMedia.appendChild(video);
+    video.poster = card.querySelector(".project-video").poster;
+    video.setAttribute("aria-label", title);
+    video.tabIndex = 0;
+    video.appendChild(localSource.cloneNode(true));
+    modalMedia.replaceChildren(video);
+    localVideoButton.hidden = true;
+    return video;
+  }
+
+  // file:// pages cannot send an HTTP Referer: use the supplied demo there.
+  const hasWebOrigin = location.protocol === "http:" || location.protocol === "https:";
+  if (details && details.youtube && hasWebOrigin) {
+    const iframe = document.createElement("iframe");
+    const embedUrl = new URL(details.youtube);
+    embedUrl.searchParams.set("rel", "0");
+    embedUrl.searchParams.set("playsinline", "1");
+    embedUrl.searchParams.set("origin", location.origin);
+    iframe.referrerPolicy = "strict-origin-when-cross-origin";
+    iframe.src = embedUrl.href;
+    iframe.title = `${t("modal.trailer")}: ${title}`;
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    iframe.allowFullscreen = true;
+    modalMedia.appendChild(iframe);
+    if (localSource) {
+      // Privacy extensions can still block embeds; keep a working alternative.
+      localVideoButton.hidden = false;
+      localVideoButton.onclick = () => renderLocalVideo().focus();
+    }
+    return;
+  }
+
+  if (localSource) {
+    renderLocalVideo();
     return;
   }
 
@@ -107,17 +138,7 @@ function openProjectModal(card) {
   getProjectLinks(card, title).forEach((link) => modalLinks.appendChild(createLink(link.label, link.href)));
   renderProjectMedia(card, title);
 
-  modal.classList.add("open");
-  modal.setAttribute("aria-hidden", "false");
-  document.body.classList.add("modal-open");
-  modalClose.focus();
-}
-
-function closeProjectModal() {
-  modal.classList.remove("open");
-  modal.setAttribute("aria-hidden", "true");
-  document.body.classList.remove("modal-open");
-  modalMedia.innerHTML = "";
+  projectDialog.open();
 }
 
 document.querySelectorAll(".project-card").forEach((card) => {
@@ -127,35 +148,9 @@ document.querySelectorAll(".project-card").forEach((card) => {
   const button = document.createElement("button");
   button.type = "button";
   button.className = "project-action";
-  button.textContent = typeof t !== "undefined" ? t("project.viewDetails") : "Ver detalles";
+  button.dataset.i18n = "project.viewDetails";
+  button.textContent = t("project.viewDetails");
+  button.setAttribute("aria-haspopup", "dialog");
   button.addEventListener("click", () => openProjectModal(card));
   linksRow.appendChild(button);
-});
-
-const animatedProjectCards = document.querySelectorAll(".project-card");
-
-if ("IntersectionObserver" in window) {
-  const projectCardObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        entry.target.classList.toggle("is-visible", entry.isIntersecting);
-      });
-    },
-    { threshold: 0.18, rootMargin: "0px 0px -40px 0px" }
-  );
-
-  animatedProjectCards.forEach((card) => projectCardObserver.observe(card));
-} else {
-  animatedProjectCards.forEach((card) => card.classList.add("is-visible"));
-}
-
-modalClose.addEventListener("click", closeProjectModal);
-modal.addEventListener("click", (event) => {
-  if (event.target === modal) closeProjectModal();
-});
-
-window.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && modal.classList.contains("open")) {
-    closeProjectModal();
-  }
 });

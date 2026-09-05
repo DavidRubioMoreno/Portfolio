@@ -1,6 +1,8 @@
 (function () {
   const hero = document.querySelector(".hero");
-  if (!hero) return;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (!hero || window.matchMedia('(max-width: 820px)').matches) return;
+  let isVisible = true;
 
   const canvas = document.createElement("canvas");
   canvas.style.position = "absolute";
@@ -11,7 +13,9 @@
   canvas.style.zIndex = "0";
   hero.insertBefore(canvas, hero.firstChild);
 
+  canvas.setAttribute("aria-hidden", "true");
   const ctx = canvas.getContext("2d");
+  if (!ctx) return;
   let w, h, dpr = 1;
   let mouseX = -9999, mouseY = -9999;
   let animId = null;
@@ -123,7 +127,7 @@
   }
 
   function start() {
-    if (animId) return;
+    if (animId || reducedMotion.matches || document.hidden || !isVisible) return;
     resize();
     if (!inited) initParticles();
     tick();
@@ -135,6 +139,11 @@
       animId = null;
     }
   }
+
+  reducedMotion.addEventListener("change", () => {
+    if (reducedMotion.matches) { stop(); ctx.clearRect(0, 0, canvas.width, canvas.height); }
+    else start();
+  });
 
   hero.addEventListener("mousemove", onMouseMove, { passive: true });
   hero.addEventListener("mouseleave", onMouseLeave, { passive: true });
@@ -152,7 +161,8 @@
   if ("IntersectionObserver" in window) {
     const observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
-        if (entry.isIntersecting) start(); else stop();
+        isVisible = entry.isIntersecting;
+        if (isVisible) start(); else stop();
       });
     }, { threshold: 0 });
     observer.observe(hero);
