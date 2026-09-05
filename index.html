@@ -161,7 +161,8 @@
     .project-modal-dialog { width: min(1160px, 100%); max-height: calc(100dvh - 48px); overflow: auto; overscroll-behavior: contain; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); }
     .project-modal-header { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; background: var(--panel); border-bottom: 1px solid var(--line); }
     .project-modal-header h2 { font-size: 1.5rem; overflow-wrap: anywhere; }
-    .project-modal-close { flex: 0 0 44px; width: 44px; height: 44px; padding: 0; border: 1px solid #52645b; border-radius: 8px; background: transparent; color: var(--text); font-size: 1.5rem; }
+    .project-modal-close { display: inline-grid; place-items: center; flex: 0 0 44px; width: 44px; height: 44px; padding: 0; border: 1px solid #52645b; border-radius: 8px; background: transparent; color: var(--text); line-height: 1; }
+    .project-modal-close svg { display: block; width: 20px; height: 20px; }
     .project-modal-close:hover { border-color: var(--accent); color: var(--accent); }
     .project-modal-content { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 28px; padding: 28px; align-items: start; }
     .project-modal-visual { min-width: 0; }
@@ -634,8 +635,8 @@
   <script src="scripts/navigation.js?v=20260905-2"></script>
   <script src="scripts/dialog.js?v=20260905-2"></script>
   <script src="scripts/project-videos.js?v=20260905-2"></script>
-  <script src="scripts/project-modal.js?v=20260905-3"></script>
-  <script src="scripts/cv-preview.js?v=20260905-2"></script>
+  <script src="scripts/project-modal.js?v=20260905-4"></script>
+  <script src="scripts/cv-preview.js?v=20260905-3"></script>
   <script>
     const contributionCalendar = document.querySelector(".calendar");
     const contributionSummary = document.querySelector(".contribution-summary");

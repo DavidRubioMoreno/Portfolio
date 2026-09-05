@@ -20,7 +20,9 @@ modal.innerHTML = `
   <div class="project-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
     <div class="project-modal-header">
       <h2 id="project-modal-title"></h2>
-      <button class="project-modal-close" type="button" data-i18n-aria-label="modal.close" aria-label="${t('modal.close')}">×</button>
+      <button class="project-modal-close" type="button" data-i18n-aria-label="modal.close" aria-label="${t('modal.close')}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
     </div>
     <div class="project-modal-content">
       <div class="project-modal-visual">
