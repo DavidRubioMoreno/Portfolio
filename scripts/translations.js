@@ -20,7 +20,7 @@ const translations = {
   "contributions.calendar": { en: "Daily contribution map", es: "Mapa de contribuciones por dia" },
 
   "hero.eyebrow": { en: "Portfolio", es: "Portfolio" },
-  "hero.title": { en: "Building tools, engines & simulations that push boundaries.", es: "Creando herramientas, simulaciones y videojuegos que traspasan fronteras." },
+  "hero.title": { en: "Building tools, engines & simulations with sound judgment.", es: "Creando herramientas, simulaciones y videojuegos con criterio." },
   "hero.desc": { en: "Software and game developer focused on simulations, tools, graphics engines & C++/C# programming.", es: "Desarrollador software y de videojuegos centrado en simulaciones, herramientas, motores gráficos y programación en C++ y C#" },
   "hero.portfolioBtn": { en: "View portfolio", es: "Ver portfolio" },
   "hero.contactBtn": { en: "Get in touch", es: "Contactar" },
