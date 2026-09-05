@@ -5,7 +5,8 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const connection = navigator.connection;
   let visible = true;
-  let loaded = false;
+  const source = video.querySelector('source');
+  let reverseNext = false;
   let restartPending = true;
 
   function updatePlayback() {
@@ -13,14 +14,10 @@
       video.pause();
       return;
     }
-    if (!loaded) {
-      const source = video.querySelector('source');
-      source.src = source.dataset.src;
-      video.load();
-      loaded = true;
-    }
     if (restartPending) {
-      video.currentTime = 0;
+      source.src = reverseNext ? source.dataset.reverseSrc : source.dataset.src;
+      video.load();
+      reverseNext = !reverseNext;
       restartPending = false;
     } else if (video.ended) {
       return;
