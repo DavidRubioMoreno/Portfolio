@@ -80,6 +80,7 @@ function renderProjectMedia(card, title) {
   const details = projectDetails[title];
   const localSource = card.querySelector(".project-video source");
   const placeholder = card.querySelector(".project-media-placeholder");
+  const localImg = card.querySelector(".project-media img");
 
   function renderLocalVideo() {
     const video = document.createElement("video");
@@ -119,6 +120,12 @@ function renderProjectMedia(card, title) {
 
   if (localSource) {
     renderLocalVideo();
+    return;
+  }
+
+  if (localImg) {
+    const clone = localImg.cloneNode(true);
+    modalMedia.appendChild(clone);
     return;
   }
 

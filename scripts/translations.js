@@ -20,6 +20,7 @@ const translations = {
   "contributions.calendar": { en: "Daily contribution map", es: "Mapa de contribuciones por dia" },
 
   "hero.eyebrow": { en: "Portfolio", es: "Portfolio" },
+  "hero.status": { en: "Collaborating with GuimGames · Lead Programmer", es: "Colaborando con GuimGames · Lead Programmer" },
   "hero.title": { en: "Building tools, engines & simulations with sound judgment.", es: "Creando herramientas, simulaciones y videojuegos con criterio." },
   "hero.desc": { en: "Software and game developer focused on simulations, tools, graphics engines & C++/C# programming.", es: "Desarrollador software y de videojuegos centrado en simulaciones, herramientas, motores gráficos y programación en C++ y C#" },
   "hero.portfolioBtn": { en: "View portfolio", es: "Ver portfolio" },
@@ -71,6 +72,21 @@ const translations = {
 
   "portfolio.title": { en: "Portfolio", es: "Portfolio" },
   "portfolio.desc": { en: "Here are some of the software development, physics simulation, graphics engines and video game projects I have worked on.", es: "Aquí se encuentran algunos de los proyectos de desarrollo de software, simulación física, motores gráficos y videojuegos en los que he trabajado." },
+
+  "project.fattoPrizzerva.title": { en: "Fatto Prizzerva", es: "Fatto Prizzerva" },
+  "project.fattoPrizzerva.short": {
+    en: "Lead Programmer at GuimGames. A boss rush set in the afterlife where each judgment is settled either peacefully over a tactical board or by force. Currently developing the online multiplayer integration.",
+    es: "Lead Programmer en GuimGames. Videojuego boss rush ambientado en el más allá donde cada juicio se resuelve pacíficamente sobre un tablero táctico o por la fuerza. Actualmente desarrollando la integración del multijugador online."
+  },
+  "project.fattoPrizzerva.desc": {
+    en: "First videogame by GuimGames: a tactical boss rush set in a reimagined afterlife where you face ten pivotal people from your past life across five Purges to determine your fate between Heaven and Hell. Every encounter offers either a Pacifist outcome (played across tactical board modes such as Pawns and the Knights Team Builder) or an Aggressive outcome (direct combat). Originally designed on a physical wooden board with 59 hand-carved pieces, the game is actively in production with two vertical slices being built in-engine.",
+    es: "Primer videojuego de GuimGames: un boss rush táctico en un más allá reimaginado donde te enfrentas a diez personas clave de tu vida pasada a través de cinco Purgas para decidir tu destino entre el Cielo y el Infierno. Cada encuentro permite una resolución Pacifista (mediante modos tácticos de tablero como Pawns y Knights Team Builder) o Agresiva (combate directo). El proyecto nació a partir de un juego de tablero físico con 59 piezas de madera talladas a mano y actualmente se encuentra en desarrollo con dos vertical slices en producción."
+  },
+  "project.fattoPrizzerva.contrib": {
+    en: "Lead Programmer role. Currently leading the technical architecture and development of the online competitive multiplayer mode.",
+    es: "Lead Programmer. Actualmente liderando la arquitectura técnica y el desarrollo del modo multijugador online competitivo."
+  },
+  "project.fattoPrizzerva.link1": { en: "Visit website", es: "Visitar web" },
 
   "project.cosmicArchitect.title": { en: "Cosmic Architect", es: "Cosmic Architect" },
   "project.cosmicArchitect.short": { en: "Interactive procedural tool for Unreal Engine 5. Design, generate and orbit entire star systems, planets and asteroid belts with high visual fidelity.", es: "Herramienta procedural interactiva desarrollada para Unreal Engine 5. Permite diseñar, generar y orbitar sistemas estelares enteros, planetas y cinturones de asteroides con alta fidelidad visual." },

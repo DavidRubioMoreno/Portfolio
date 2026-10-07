@@ -70,6 +70,12 @@
     .hero-content { position: relative; }
     .eyebrow { display: flex; align-items: center; gap: 10px; margin: 0 0 26px; color: var(--accent); font: 500 .8125rem var(--font-mono); letter-spacing: .15em; text-transform: uppercase; }
     .eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+    .hero-status { display: inline-flex; align-items: center; gap: 10px; padding: 7px 14px; margin-bottom: 24px; border: 1px solid rgba(115, 243, 181, .28); border-radius: 9999px; background: rgba(16, 23, 25, .8); backdrop-filter: blur(8px); font: 500 .8125rem var(--font-mono); color: var(--text); text-decoration: none; transition: border-color .2s, background .2s, transform .2s, box-shadow .2s; width: fit-content; }
+    .hero-status:hover { border-color: var(--accent); background: rgba(16, 23, 25, .95); transform: translateY(-1px); box-shadow: 0 0 16px var(--accent-glow); }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); animation: pulse-dot 2s infinite ease-in-out; flex-shrink: 0; }
+    @keyframes pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .4; transform: scale(.85); } }
+    .status-arrow { margin-left: 2px; color: var(--accent); font-size: .875rem; transition: transform .2s; }
+    .hero-status:hover .status-arrow { transform: translate(2px, -2px); }
     h1, h2, h3 { margin: 0; line-height: 1.14; letter-spacing: -.045em; }
     h1 { max-width: 970px; font-size: clamp(2.25rem, 5.5vw, 4.75rem); font-weight: 700; text-wrap: balance; }
     .hero-content > p:not(.eyebrow) { max-width: 660px; margin: 28px 0 32px; color: var(--text-dim); font-size: 1.0625rem; line-height: 1.8; }
@@ -95,7 +101,7 @@
     .project-card:first-child { grid-column: 1 / -1; display: grid; grid-template-columns: 1.12fr 1fr; }
     .project-media { position: relative; aspect-ratio: 16 / 9; background: var(--panel-strong); overflow: hidden; }
     .project-card:first-child .project-media { aspect-ratio: auto; min-height: 360px; }
-    .project-video { display: block; width: 100%; height: 100%; object-fit: cover; }
+    .project-video, .project-media img { display: block; width: 100%; height: 100%; object-fit: cover; }
     .project-body { display: flex; flex: 1; flex-direction: column; align-items: start; padding: 28px; }
     .project-body::before { content: counter(project, decimal-leading-zero); margin-bottom: 16px; font: 400 .75rem var(--font-mono); color: var(--accent); }
     .project-body h3 { font-size: 1.625rem; letter-spacing: -.035em; }
@@ -174,7 +180,7 @@
     .project-video-alternative[hidden] { display: none; }
     .project-modal-media { width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border-radius: 10px; background: #000; }
     .project-modal-media:has(iframe) { min-height: 200px; }
-    .project-modal-media iframe, .project-modal-media video { display: block; width: 100%; height: 100%; border: 0; object-fit: contain; }
+    .project-modal-media iframe, .project-modal-media video, .project-modal-media img { display: block; width: 100%; height: 100%; border: 0; object-fit: contain; }
     .project-modal-info { min-width: 0; }
     .project-modal-info p { margin: 0; color: var(--text-dim); font-size: 1rem; line-height: 1.8; }
     .project-modal-contributions { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--line); }
@@ -227,6 +233,7 @@
       .brand::before { display: none; }
       .hero { padding: 48px 0 56px; }
       .eyebrow { margin-bottom: 22px; font-size: .75rem; }
+      .hero-status { font-size: .75rem; padding: 6px 12px; margin-bottom: 20px; }
       h1 { font-size: clamp(2.125rem, 8.8vw, 3rem); letter-spacing: -.045em; text-wrap: initial; }
       .hero-content > p:not(.eyebrow) { font-size: 1rem; margin: 24px 0 28px; line-height: 1.75; }
       .button-row { align-items: stretch; }
@@ -297,6 +304,11 @@
       </video>
       <div class="container hero-content">
         <p class="eyebrow" data-i18n="hero.eyebrow">Portfolio</p>
+        <a class="hero-status" href="https://www.fatto-prizzerva.com" target="_blank" rel="noopener noreferrer">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span data-i18n="hero.status">Colaborando con GuimGames · Lead Programmer</span>
+          <span class="status-arrow" aria-hidden="true">↗</span>
+        </a>
         <h1 data-i18n="hero.title">Creando herramientas, simulaciones y videojuegos con criterio.</h1>
         <p data-i18n="hero.desc">
           Desarrollador software y de videojuegos centrado en simulaciones,
@@ -318,6 +330,20 @@
           </p>
         </div>
         <div class="portfolio-grid">
+
+          <article class="project-card" data-i18n-description="project.fattoPrizzerva.desc" data-i18n-contributions="project.fattoPrizzerva.contrib" data-description="Primer videojuego de GuimGames: un boss rush táctico en un más allá reimaginado donde te enfrentas a diez personas clave de tu vida pasada a través de cinco Purgas para decidir tu destino entre el Cielo y el Infierno. Cada encuentro permite una resolución Pacifista (mediante modos tácticos de tablero como Pawns y Knights Team Builder) o Agresiva (combate directo). El proyecto nació a partir de un juego de tablero físico con 59 piezas de madera talladas a mano y actualmente se encuentra en desarrollo con dos vertical slices en producción."
+          data-contributions="Lead Programmer. Actualmente liderando la arquitectura técnica y el desarrollo del modo multijugador online competitivo.">
+            <div class="project-media">
+              <img src="assets/images/projects/FattoPrizzerva.jpg" alt="Fatto Prizzerva - GuimGames" loading="lazy">
+            </div>
+            <div class="project-body">
+              <h3 data-i18n="project.fattoPrizzerva.title">Fatto Prizzerva</h3>
+              <p data-i18n="project.fattoPrizzerva.short">Lead Programmer en GuimGames. Videojuego boss rush ambientado en el más allá donde cada juicio se resuelve pacíficamente sobre un tablero táctico o por la fuerza. Actualmente desarrollando la integración del multijugador online.</p>
+              <div class="project-links-row">
+                <a class="project-link" href="https://www.fatto-prizzerva.com" target="_blank" rel="noopener noreferrer" data-i18n="project.fattoPrizzerva.link1">Visitar web</a>
+              </div>
+            </div>
+          </article>
 
           <article class="project-card" data-i18n-description="project.cosmicArchitect.desc" data-i18n-contributions="project.cosmicArchitect.contrib" data-description="Plugin de C++/Blueprints para Unreal Engine 5 (publicado en Fab), creado como trabajo de fin de grado en grupo de 3. Este permite generar sistemas planetarios proceduralmente, además implementa sistemas de LOD, colisiones, distribución automática de vegetación y un sistema que combina órbitas elípticas con simulación N-cuerpos."
           data-contributions="Investigación, creación de requisitos funcionales, implementación de: estructura de módulos, sistema de LOD, actualización por fases, sistema de generación de ruido con patrón Strategy, materiales, oceano, simulación N-cuerpos, generador de texturas 3D, pruebas de rendimiento, página web. Cumplimiento de requisitos técnicos para publicar en Fab. ">
@@ -532,6 +558,7 @@
             <div class="skill-item"><img src="assets/icons/cmake.webp" alt="" loading="lazy" width="46" height="46"><span>CMake</span></div>
             <div class="skill-item"><img src="assets/icons/cpp.webp" alt="" loading="lazy" width="46" height="46"><span>C++</span></div>
             <div class="skill-item"><img src="assets/icons/csharp.webp" alt="" loading="lazy" width="46" height="46"><span>C#</span></div>
+            <div class="skill-item"><img src="assets/icons/docker.webp" alt="" loading="lazy" width="46" height="46"><span>Docker</span></div>
             <div class="skill-item"><img src="assets/icons/fmod.webp" alt="" loading="lazy" width="46" height="46"><span>FMOD</span></div>
             <div class="skill-item"><img src="assets/icons/git.webp" alt="" loading="lazy" width="46" height="46"><span>Git</span></div>
             <div class="skill-item"><img src="assets/icons/github.webp" alt="" loading="lazy" width="46" height="46"><span>GitHub</span></div>
@@ -636,13 +663,13 @@
       <span style="margin-left: 16px; opacity: 0.5;" data-i18n="footer.tag">build.v1.1</span>
     </div>
   </footer>
-  <script src="scripts/translations.js?v=20260905-4"></script>
+  <script src="scripts/translations.js?v=20261007-1"></script>
   <script src="scripts/hero-video.js?v=20260905-3"></script>
   <script src="scripts/carousel.js?v=20260905-2"></script>
   <script src="scripts/navigation.js?v=20260905-2"></script>
   <script src="scripts/dialog.js?v=20260905-2"></script>
   <script src="scripts/project-videos.js?v=20260905-2"></script>
-  <script src="scripts/project-modal.js?v=20260905-4"></script>
+  <script src="scripts/project-modal.js?v=20261007-1"></script>
   <script src="scripts/cv-preview.js?v=20260905-3"></script>
   <script>
     const contributionCalendar = document.querySelector(".calendar");
